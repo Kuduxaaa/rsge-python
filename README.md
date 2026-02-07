@@ -12,7 +12,7 @@ Python SDK for the **Georgian Revenue Service** (სსიპ შემოსა
 ## Installation
 
 ```bash
-pip install rsge-sdk
+pip install rsge-python
 ```
 
 Or install from source:
