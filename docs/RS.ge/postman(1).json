@@ -1,0 +1,965 @@
+{
+	"info": {
+		"_postman_id": "a7c0faf7-62c7-4b4e-8be6-b8c17c06770d",
+		"name": "Invoice",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get_un_id_from_user_id",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "text/xml; charset=UTF-8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n  <soap:Body>\r\n    <get_un_id_from_user_id xmlns=\"http://tempuri.org/\">\r\n      <su>programmer:12345678910</su>\r\n      <sp>123456</sp>\r\n      <user_id>135184</user_id>\r\n    </get_un_id_from_user_id>\r\n  </soap:Body>\r\n</soap:Envelope>"
+				},
+				"url": {
+					"raw": "https://www.revenue.mof.ge/ntosservice/ntosservice.asmx?op=get_un_id_from_user_id",
+					"protocol": "https",
+					"host": [
+						"www",
+						"revenue",
+						"mof",
+						"ge"
+					],
+					"path": [
+						"ntosservice",
+						"ntosservice.asmx"
+					],
+					"query": [
+						{
+							"key": "op",
+							"value": "get_un_id_from_user_id"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_tin_from_un_id",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "text/xml; charset=UTF-8",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "\"http://tempuri.org/get_tin_from_un_id\"",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n  <soap:Body>\r\n    <get_tin_from_un_id xmlns=\"http://tempuri.org/\">\r\n      <user_id>783</user_id>\r\n      <un_id>731937</un_id>\r\n      <su>itana:206322102</su>\r\n      <sp>123456</sp>\r\n    </get_tin_from_un_id>\r\n  </soap:Body>\r\n</soap:Envelope>"
+				},
+				"url": {
+					"raw": "https://www.revenue.mof.ge/ntosservice/ntosservice.asmx?op=get_tin_from_un_id",
+					"protocol": "https",
+					"host": [
+						"www",
+						"revenue",
+						"mof",
+						"ge"
+					],
+					"path": [
+						"ntosservice",
+						"ntosservice.asmx"
+					],
+					"query": [
+						{
+							"key": "op",
+							"value": "get_tin_from_un_id"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_un_id_from_tin",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "SOAPAction",
+						"value": "\"http://tempuri.org/get_un_id_from_tin\"",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "text/xml; charset=UTF-8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n  <soap:Body>\r\n    <get_un_id_from_tin xmlns=\"http://tempuri.org/\">\r\n      <user_id>783</user_id>\r\n      <tin>12345678910</tin>\r\n      <su>itana:206322102</su>\r\n      <sp>123456</sp>\r\n    </get_un_id_from_tin>\r\n  </soap:Body>\r\n</soap:Envelope>"
+				},
+				"url": {
+					"raw": "https://www.revenue.mof.ge/ntosservice/ntosservice.asmx?op=get_un_id_from_tin",
+					"protocol": "https",
+					"host": [
+						"www",
+						"revenue",
+						"mof",
+						"ge"
+					],
+					"path": [
+						"ntosservice",
+						"ntosservice.asmx"
+					],
+					"query": [
+						{
+							"key": "op",
+							"value": "get_un_id_from_tin"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_ser_users",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "text/xml; charset=UTF-8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n  <soap:Body>\r\n    <get_ser_users xmlns=\"http://tempuri.org/\">\r\n      <user_name>tbilisi</user_name>\r\n      <user_password>123456</user_password>\r\n    </get_ser_users>\r\n  </soap:Body>\r\n</soap:Envelope>"
+				},
+				"url": {
+					"raw": "https://www.revenue.mof.ge/ntosservice/ntosservice.asmx?op=get_ser_users",
+					"protocol": "https",
+					"host": [
+						"www",
+						"revenue",
+						"mof",
+						"ge"
+					],
+					"path": [
+						"ntosservice",
+						"ntosservice.asmx"
+					],
+					"query": [
+						{
+							"key": "op",
+							"value": "get_ser_users"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_ser_users_notes",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "text/xml; charset=UTF-8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n  <soap:Body>\r\n    <get_ser_users_notes xmlns=\"http://tempuri.org/\">\r\n      <tin>206322102</tin>\r\n    </get_ser_users_notes>\r\n  </soap:Body>\r\n</soap:Envelope>"
+				},
+				"url": {
+					"raw": "https://www.revenue.mof.ge/ntosservice/ntosservice.asmx?op=get_ser_users_notes",
+					"protocol": "https",
+					"host": [
+						"www",
+						"revenue",
+						"mof",
+						"ge"
+					],
+					"path": [
+						"ntosservice",
+						"ntosservice.asmx"
+					],
+					"query": [
+						{
+							"key": "op",
+							"value": "get_ser_users_notes"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_invoice",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "text/xml; charset=UTF-8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n  <soap:Body>\r\n    <get_invoice xmlns=\"http://tempuri.org/\">\r\n      <user_id>783</user_id>\r\n      <invois_id>161058850</invois_id>\r\n      <su>itana:206322102</su>\r\n      <sp>123456</sp>\r\n    </get_invoice>\r\n  </soap:Body>\r\n</soap:Envelope>"
+				},
+				"url": {
+					"raw": "https://www.revenue.mof.ge/ntosservice/ntosservice.asmx?op=get_invoice",
+					"protocol": "https",
+					"host": [
+						"www",
+						"revenue",
+						"mof",
+						"ge"
+					],
+					"path": [
+						"ntosservice",
+						"ntosservice.asmx"
+					],
+					"query": [
+						{
+							"key": "op",
+							"value": "get_invoice"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_invoice_desc",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "text/xml; charset=UTF-8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n  <soap:Body>\r\n    <get_invoice_desc xmlns=\"http://tempuri.org/\">\r\n      <user_id>783</user_id>\r\n      <invois_id>161062050</invois_id>\r\n      <su>itana:206322102</su>\r\n      <sp>123456</sp>\r\n    </get_invoice_desc>\r\n  </soap:Body>\r\n</soap:Envelope>"
+				},
+				"url": {
+					"raw": "https://www.revenue.mof.ge/ntosservice/ntosservice.asmx?op=get_invoice_desc",
+					"protocol": "https",
+					"host": [
+						"www",
+						"revenue",
+						"mof",
+						"ge"
+					],
+					"path": [
+						"ntosservice",
+						"ntosservice.asmx"
+					],
+					"query": [
+						{
+							"key": "op",
+							"value": "get_invoice_desc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_seller_invoices",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "text/xml; charset=UTF-8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n    <soap:Body>\n        <get_seller_invoices xmlns=\"http://tempuri.org/\">\n            <user_id>783</user_id>\n            <un_id>731937</un_id>\n            <s_dt>2019-07-19T00:00:00Z</s_dt>\n            <e_dt>2019-07-19T23:59:00Z</e_dt>\n            <op_s_dt>2019-07</op_s_dt>\n            <op_e_dt>2019-07</op_e_dt>\n            <invoice_no></invoice_no>\n            <sa_ident_no></sa_ident_no>\n            <desc></desc>\n            <doc_mos_nom></doc_mos_nom>\n            <su>itana:206322102</su>\n            <sp>123456</sp>\n        </get_seller_invoices>\n    </soap:Body>\n</soap:Envelope>"
+				},
+				"url": {
+					"raw": "https://www.revenue.mof.ge/ntosservice/ntosservice.asmx?op=get_seller_invoices",
+					"protocol": "https",
+					"host": [
+						"www",
+						"revenue",
+						"mof",
+						"ge"
+					],
+					"path": [
+						"ntosservice",
+						"ntosservice.asmx"
+					],
+					"query": [
+						{
+							"key": "op",
+							"value": "get_seller_invoices"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_buyer_invoices",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "text/xml; charset=UTF-8",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "\"http://tempuri.org/get_buyer_invoices\"",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n  <soap:Body>\r\n    <get_buyer_invoices xmlns=\"http://tempuri.org/\">\r\n      <user_id>783</user_id>\r\n      <un_id>731937</un_id>\r\n      <s_dt>2019-01-01T00:00:00Z</s_dt>\r\n      <e_dt>2019-09-01T23:59:00Z</e_dt>\r\n      <op_s_dt>2019-01</op_s_dt>\r\n      <op_e_dt>2019-08</op_e_dt>\r\n      <invoice_no></invoice_no>\r\n      <sa_ident_no></sa_ident_no>\r\n      <desc></desc>\r\n      <doc_mos_nom></doc_mos_nom>\r\n      <su>itana:206322102</su>\r\n      <sp>123456</sp>\r\n    </get_buyer_invoices>\r\n  </soap:Body>\r\n</soap:Envelope>"
+				},
+				"url": {
+					"raw": "https://www.revenue.mof.ge/ntosservice/ntosservice.asmx?op=get_buyer_invoices",
+					"protocol": "https",
+					"host": [
+						"www",
+						"revenue",
+						"mof",
+						"ge"
+					],
+					"path": [
+						"ntosservice",
+						"ntosservice.asmx"
+					],
+					"query": [
+						{
+							"key": "op",
+							"value": "get_buyer_invoices"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_ntos_invoices_inv_nos",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "text/xml; charset=UTF-8",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "\"http://tempuri.org/get_ntos_invoices_inv_nos\"",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n  <soap:Body>\r\n    <get_ntos_invoices_inv_nos xmlns=\"http://tempuri.org/\">\r\n      <user_id>783</user_id>\r\n      <invois_id>181547870</invois_id>\r\n      <su>itana:206322102</su>\r\n      <sp>123456</sp>\r\n    </get_ntos_invoices_inv_nos>\r\n  </soap:Body>\r\n</soap:Envelope>"
+				},
+				"url": {
+					"raw": "https://www.revenue.mof.ge/ntosservice/ntosservice.asmx?op=get_ntos_invoices_inv_nos",
+					"protocol": "https",
+					"host": [
+						"www",
+						"revenue",
+						"mof",
+						"ge"
+					],
+					"path": [
+						"ntosservice",
+						"ntosservice.asmx"
+					],
+					"query": [
+						{
+							"key": "op",
+							"value": "get_ntos_invoices_inv_nos"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "what_is_my_ip",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "text/xml; charset=UTF-8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n  <soap:Body>\r\n    <what_is_my_ip xmlns=\"http://tempuri.org/\" />\r\n  </soap:Body>\r\n</soap:Envelope>"
+				},
+				"url": {
+					"raw": "https://www.revenue.mof.ge/ntosservice/ntosservice.asmx?op=what_is_my_ip",
+					"protocol": "https",
+					"host": [
+						"www",
+						"revenue",
+						"mof",
+						"ge"
+					],
+					"path": [
+						"ntosservice",
+						"ntosservice.asmx"
+					],
+					"query": [
+						{
+							"key": "op",
+							"value": "what_is_my_ip"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "chek",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "text/xml; charset=UTF-8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n  <soap:Body>\r\n    <chek xmlns=\"http://tempuri.org/\">\r\n      <su>programmer:12345678910</su>\r\n      <sp>123456</sp>\r\n      <user_id>135184</user_id>\r\n    </chek>\r\n  </soap:Body>\r\n</soap:Envelope>"
+				},
+				"url": {
+					"raw": "https://www.revenue.mof.ge/ntosservice/ntosservice.asmx?op=chek",
+					"protocol": "https",
+					"host": [
+						"www",
+						"revenue",
+						"mof",
+						"ge"
+					],
+					"path": [
+						"ntosservice",
+						"ntosservice.asmx"
+					],
+					"query": [
+						{
+							"key": "op",
+							"value": "chek"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "change_invoice_status",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "text/xml; charset=UTF-8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <soap:Body>\r\n        <change_invoice_status xmlns=\"http://tempuri.org/\">\r\n            <user_id>783</user_id>\r\n            <inv_id>132549774</inv_id>\r\n            <status>1</status>\r\n            <su>itana:206322102</su>\r\n            <sp>123456</sp>\r\n        </change_invoice_status>\r\n    </soap:Body>\r\n</soap:Envelope>"
+				},
+				"url": {
+					"raw": "https://www.revenue.mof.ge/ntosservice/ntosservice.asmx?op=change_invoice_status",
+					"protocol": "https",
+					"host": [
+						"www",
+						"revenue",
+						"mof",
+						"ge"
+					],
+					"path": [
+						"ntosservice",
+						"ntosservice.asmx"
+					],
+					"query": [
+						{
+							"key": "op",
+							"value": "change_invoice_status"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "save_invoice",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "text/xml; charset=UTF-8",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "\"http://tempuri.org/save_invoice\"",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n  <soap:Body>\r\n    <save_invoice xmlns=\"http://tempuri.org/\">\r\n      <user_id>783</user_id>\r\n      <invois_id>0</invois_id>\r\n      <operation_date>2020-11-06T00:00:00.0000</operation_date>\r\n      <seller_un_id>731937</seller_un_id>\r\n      <buyer_un_id>1149251</buyer_un_id>\r\n      <overhead_no></overhead_no>\r\n      <overhead_dt>2020-11-06T00:00:00Z</overhead_dt>\r\n      <b_s_user_id>0</b_s_user_id>\r\n      <su>itana:206322102</su>\r\n      <sp>123456</sp>\r\n    </save_invoice>\r\n  </soap:Body>\r\n</soap:Envelope>"
+				},
+				"url": {
+					"raw": "https://www.revenue.mof.ge/ntosservice/ntosservice.asmx?op=save_invoice",
+					"protocol": "https",
+					"host": [
+						"www",
+						"revenue",
+						"mof",
+						"ge"
+					],
+					"path": [
+						"ntosservice",
+						"ntosservice.asmx"
+					],
+					"query": [
+						{
+							"key": "op",
+							"value": "save_invoice"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "save_invoice Copy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "text/xml; charset=UTF-8",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "\"http://tempuri.org/save_invoice\"",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n  <soap:Body>\r\n    <save_invoice xmlns=\"http://tempuri.org/\">\r\n      <user_id>783</user_id>\r\n      <invois_id>0</invois_id>\r\n      <operation_date>2020-11-06T00:00:00.0000</operation_date>\r\n      <seller_un_id>731937</seller_un_id>\r\n      <buyer_un_id>1149251</buyer_un_id>\r\n      <overhead_no></overhead_no>\r\n      <overhead_dt>2020-11-06T00:00:00Z</overhead_dt>\r\n      <b_s_user_id>0</b_s_user_id>\r\n      <su>itana:206322102</su>\r\n      <sp>123456</sp>\r\n    </save_invoice>\r\n  </soap:Body>\r\n</soap:Envelope>"
+				},
+				"url": {
+					"raw": "https://www.revenue.mof.ge/ntosservice/ntosservice.asmx?op=save_invoice",
+					"protocol": "https",
+					"host": [
+						"www",
+						"revenue",
+						"mof",
+						"ge"
+					],
+					"path": [
+						"ntosservice",
+						"ntosservice.asmx"
+					],
+					"query": [
+						{
+							"key": "op",
+							"value": "save_invoice"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "save_invoice_a",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "text/xml; charset=UTF-8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n  <soap:Body>\r\n    <save_invoice_a xmlns=\"http://tempuri.org/\">\r\n      <user_id>783</user_id>\r\n      <invois_id>0</invois_id>\r\n      <operation_date>2019-07-22T11:00:00Z</operation_date>\r\n      <seller_un_id>731937</seller_un_id>\r\n      <buyer_un_id>1149251</buyer_un_id>\r\n      <overhead_no></overhead_no>\r\n      <overhead_dt>2019-07-22T11:00:00Z</overhead_dt>\r\n      <b_s_user_id>200402</b_s_user_id>\r\n      <su>itana:206322102</su>\r\n      <sp>123456</sp>\r\n    </save_invoice_a>\r\n  </soap:Body>\r\n</soap:Envelope>"
+				},
+				"url": {
+					"raw": "https://www.revenue.mof.ge/ntosservice/ntosservice.asmx?op=save_invoice_a",
+					"protocol": "https",
+					"host": [
+						"www",
+						"revenue",
+						"mof",
+						"ge"
+					],
+					"path": [
+						"ntosservice",
+						"ntosservice.asmx"
+					],
+					"query": [
+						{
+							"key": "op",
+							"value": "save_invoice_a"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "save_invoice_desc",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "text/xml; charset=UTF-8",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "\"http://tempuri.org/save_invoice_desc\"",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n  <soap:Body>\r\n    <save_invoice_desc xmlns=\"http://tempuri.org/\">\r\n      <user_id>783</user_id>\r\n      <id>0</id>\r\n      <su>itana:206322102</su>\r\n      <sp>123456</sp>\r\n      <invois_id>192409002</invois_id>\r\n      <goods>ფასიანი ნომრის ღირებულება ( მაგთი)  595540540</goods>\r\n      <g_unit>სხვა</g_unit>\r\n      <g_number>0</g_number>\r\n      <full_amount>30</full_amount>\r\n      <drg_amount>4.58</drg_amount>\r\n      <aqcizi_amount>0</aqcizi_amount>\r\n      <akciz_id>0</akciz_id>\r\n    </save_invoice_desc>\r\n  </soap:Body>\r\n</soap:Envelope>"
+				},
+				"url": {
+					"raw": "https://www.revenue.mof.ge/ntosservice/ntosservice.asmx?op=save_invoice_desc",
+					"protocol": "https",
+					"host": [
+						"www",
+						"revenue",
+						"mof",
+						"ge"
+					],
+					"path": [
+						"ntosservice",
+						"ntosservice.asmx"
+					],
+					"query": [
+						{
+							"key": "op",
+							"value": "save_invoice_desc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete_invoice_desc",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "text/xml; charset=UTF-8",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "\"http://tempuri.org/delete_invoice_desc\"",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n    <soap:Body>\n        <delete_invoice_desc xmlns=\"http://tempuri.org/\">\n            <user_id>783</user_id>\n            <id>2315931078</id>\n            <inv_id>214895595</inv_id>\n            <su>itana:206322102</su>\n            <sp>123456</sp>\n        </delete_invoice_desc>\n    </soap:Body>\n</soap:Envelope>"
+				},
+				"url": {
+					"raw": "https://www.revenue.mof.ge/ntosservice/ntosservice.asmx?op=delete_invoice_desc",
+					"protocol": "https",
+					"host": [
+						"www",
+						"revenue",
+						"mof",
+						"ge"
+					],
+					"path": [
+						"ntosservice",
+						"ntosservice.asmx"
+					],
+					"query": [
+						{
+							"key": "op",
+							"value": "delete_invoice_desc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "k_invoice",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "text/xml; charset=UTF-8"
+					},
+					{
+						"key": "SOAPAction",
+						"type": "text",
+						"value": "\"http://tempuri.org/k_invoice\""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <k_invoice xmlns=\"http://tempuri.org/\">\n      <user_id>783</user_id>\n      <inv_id>188256780</inv_id>\n      <k_type>4</k_type>\n      <su>itana:206322102</su>\n      <sp>123456</sp>\n    </k_invoice>\n  </soap:Body>\n</soap:Envelope>"
+				},
+				"url": {
+					"raw": "https://www.revenue.mof.ge/ntosservice/ntosservice.asmx?op=k_invoice",
+					"protocol": "https",
+					"host": [
+						"www",
+						"revenue",
+						"mof",
+						"ge"
+					],
+					"path": [
+						"ntosservice",
+						"ntosservice.asmx"
+					],
+					"query": [
+						{
+							"key": "op",
+							"value": "k_invoice"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "save_ntos_invoices_inv_nos",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "text/xml; charset=UTF-8",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "\"http://tempuri.org/save_ntos_invoices_inv_nos\"",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n    <soap:Body>\n        <save_ntos_invoices_inv_nos xmlns=\"http://tempuri.org/\">\n            <invois_id>187130046</invois_id>\n            <user_id>783</user_id>\n            <overhead_no>0314876596</overhead_no>\n            <overhead_dt>2017-07-01T17:24:00+04:00</overhead_dt>\n            <su>itana:206322102</su>\n            <sp>123456</sp>\n        </save_ntos_invoices_inv_nos>\n    </soap:Body>\n</soap:Envelope>"
+				},
+				"url": {
+					"raw": "https://www.revenue.mof.ge/ntosservice/ntosservice.asmx?op=save_ntos_invoices_inv_nos",
+					"protocol": "https",
+					"host": [
+						"www",
+						"revenue",
+						"mof",
+						"ge"
+					],
+					"path": [
+						"ntosservice",
+						"ntosservice.asmx"
+					],
+					"query": [
+						{
+							"key": "op",
+							"value": "save_ntos_invoices_inv_nos"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete_ntos_invoices_inv_nos",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "text/xml; charset=UTF-8",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "\"http://tempuri.org/delete_ntos_invoices_inv_nos\"",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n    <soap:Body>\n        <delete_ntos_invoices_inv_nos xmlns=\"http://tempuri.org/\">\n            <inv_id>188254354</inv_id>\n            <user_id>783</user_id>\n            <id>574693772</id>\n            <su>itana:206322102</su>\n            <sp>123456</sp>\n        </delete_ntos_invoices_inv_nos>\n    </soap:Body>\n</soap:Envelope>"
+				},
+				"url": {
+					"raw": "https://www.revenue.mof.ge/ntosservice/ntosservice.asmx?op=delete_ntos_invoices_inv_nos",
+					"protocol": "https",
+					"host": [
+						"www",
+						"revenue",
+						"mof",
+						"ge"
+					],
+					"path": [
+						"ntosservice",
+						"ntosservice.asmx"
+					],
+					"query": [
+						{
+							"key": "op",
+							"value": "delete_ntos_invoices_inv_nos"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_requested_invoices",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "text/xml; charset=UTF-8",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "\"http://tempuri.org/get_requested_invoices\"",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n    <soap:Body>\n        <get_requested_invoices xmlns=\"http://tempuri.org/\">\n            <user_id>783</user_id>\n            <seller_un_id>731937</seller_un_id>\n            <su>itana:206322102</su>\n            <sp>123456</sp>\n        </get_requested_invoices>\n    </soap:Body>\n</soap:Envelope>"
+				},
+				"url": {
+					"raw": "https://www.revenue.mof.ge/ntosservice/ntosservice.asmx?op=get_requested_invoices",
+					"protocol": "https",
+					"host": [
+						"www",
+						"revenue",
+						"mof",
+						"ge"
+					],
+					"path": [
+						"ntosservice",
+						"ntosservice.asmx"
+					],
+					"query": [
+						{
+							"key": "op",
+							"value": "get_requested_invoices"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_invoice_id",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "text/xml; charset=UTF-8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n  <soap:Body>\r\n    <get_invoice_id xmlns=\"http://tempuri.org/\">\r\n      <f_series>ეა-72</f_series>\r\n      <f_number>8168593</f_number>\r\n      <su>itana:206322102</su>\r\n      <sp>123456</sp>\r\n    </get_invoice_id>\r\n  </soap:Body>\r\n</soap:Envelope>"
+				},
+				"url": {
+					"raw": "https://www.revenue.mof.ge/ntosservice/ntosservice.asmx?op=get_invoice_id",
+					"protocol": "https",
+					"host": [
+						"www",
+						"revenue",
+						"mof",
+						"ge"
+					],
+					"path": [
+						"ntosservice",
+						"ntosservice.asmx"
+					],
+					"query": [
+						{
+							"key": "op",
+							"value": "get_invoice_id"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

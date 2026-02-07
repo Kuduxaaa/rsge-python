@@ -1,0 +1,157 @@
+{
+	"info": {
+		"_postman_id": "e5e39e96-b8de-4045-9d5d-78fe37396a05",
+		"name": "SpecInvoices",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get_invoice_n",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml; charset=UTF-8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n  <soap:Body>\r\n    <get_invoice_n xmlns=\"http://tempuri.org/\">\r\n      <user_id>783</user_id>\r\n      <invois_id>5231964</invois_id>\r\n      <su>itana:206322102</su>\r\n      <sp>123456</sp>\r\n    </get_invoice_n>\r\n  </soap:Body>\r\n</soap:Envelope>"
+				},
+				"url": {
+					"raw": "https://webserv.rs.ge/specinvoices/SpecInvoicesService.asmx?op=get_invoice_n",
+					"protocol": "https",
+					"host": [
+						"webserv",
+						"rs",
+						"ge"
+					],
+					"path": [
+						"specinvoices",
+						"SpecInvoicesService.asmx"
+					],
+					"query": [
+						{
+							"key": "op",
+							"value": "get_invoice_n"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_buyer_invoices_n",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml; charset=UTF-8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n  <soap:Body>\r\n    <get_buyer_invoices_n xmlns=\"http://tempuri.org/\">\r\n      <user_id>783</user_id>\r\n      <un_id>731937</un_id>\r\n      <s_dt>2019-10-22T11:00:00Z</s_dt>\r\n      <e_dt>2019-10-25T11:00:00Z</e_dt>\r\n      <op_s_dt>2019-10-22T11:00:00Z</op_s_dt>\r\n      <op_e_dt>2019-10-25T11:00:00Z</op_e_dt>\r\n      <invoice_no>643822</invoice_no>\r\n      <sa_ident_no>12345678910</sa_ident_no>\r\n      <desc>სატესტოk</desc>\r\n      <doc_mos_nom></doc_mos_nom>\r\n      <su>itana:206322102</su>\r\n      <sp>123456</sp>\r\n    </get_buyer_invoices_n>\r\n  </soap:Body>\r\n</soap:Envelope>"
+				},
+				"url": {
+					"raw": "https://webserv.rs.ge/specinvoices/SpecInvoicesService.asmx?op=get_buyer_invoices_n",
+					"protocol": "https",
+					"host": [
+						"webserv",
+						"rs",
+						"ge"
+					],
+					"path": [
+						"specinvoices",
+						"SpecInvoicesService.asmx"
+					],
+					"query": [
+						{
+							"key": "op",
+							"value": "get_buyer_invoices_n"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_seller_invoices_n",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml; charset=UTF-8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n  <soap:Body>\r\n    <get_seller_invoices_n xmlns=\"http://tempuri.org/\">\r\n      <user_id>783</user_id>\r\n      <un_id>731937</un_id>\r\n      <s_dt>2019-10-15T11:00:00Z</s_dt>\r\n      <e_dt>2019-10-25T11:00:00Z</e_dt>\r\n      <op_s_dt>2019-10-15T11:00:00Z</op_s_dt>\r\n      <op_e_dt>2019-10-25T11:00:00Z</op_e_dt>\r\n      <invoice_no>644088</invoice_no>\r\n      <sa_ident_no>12345678910</sa_ident_no>\r\n      <desc></desc>\r\n      <doc_mos_nom></doc_mos_nom>\r\n      <su>itana:206322102</su>\r\n      <sp>123456</sp>\r\n    </get_seller_invoices_n>\r\n  </soap:Body>\r\n</soap:Envelope>"
+				},
+				"url": {
+					"raw": "https://webserv.rs.ge/specinvoices/SpecInvoicesService.asmx?op=get_seller_invoices_n",
+					"protocol": "https",
+					"host": [
+						"webserv",
+						"rs",
+						"ge"
+					],
+					"path": [
+						"specinvoices",
+						"SpecInvoicesService.asmx"
+					],
+					"query": [
+						{
+							"key": "op",
+							"value": "get_seller_invoices_n"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "chek_in",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml; charset=UTF-8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n  <soap:Body>\r\n    <chek_in xmlns=\"http://tempuri.org/\">\r\n      <user_id>783</user_id>\r\n      <log_text></log_text>\r\n      <su>itana:206322102</su>\r\n      <sp>123456</sp>\r\n    </chek_in>\r\n  </soap:Body>\r\n</soap:Envelope>"
+				},
+				"url": {
+					"raw": "https://webserv.rs.ge/specinvoices/SpecInvoicesService.asmx?op=chek_in",
+					"protocol": "https",
+					"host": [
+						"webserv",
+						"rs",
+						"ge"
+					],
+					"path": [
+						"specinvoices",
+						"SpecInvoicesService.asmx"
+					],
+					"query": [
+						{
+							"key": "op",
+							"value": "chek_in"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

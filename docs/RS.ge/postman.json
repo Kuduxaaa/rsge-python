@@ -1,0 +1,40 @@
+{
+	"info": {
+		"_postman_id": "2c051f82-bc14-4ddd-b340-975a619cc417",
+		"name": "TaxPayerPublicInfo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28602369"
+	},
+	"item": [
+		{
+			"name": "TaxPayer/RSPublicInfo",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"IdentCode\": \"206322102\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://xdata.rs.ge/TaxPayer/RSPublicInfo",
+					"protocol": "https",
+					"host": [
+						"xdata",
+						"rs",
+						"ge"
+					],
+					"path": [
+						"TaxPayer",
+						"RSPublicInfo"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

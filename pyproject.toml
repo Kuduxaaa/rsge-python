@@ -1,0 +1,71 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rsge-sdk"
+version = "1.0.0"
+description = "Python SDK for the Georgian Revenue Service (RS.ge) – WayBill & Customs Declarations API"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+authors = [
+    {name = "RS.ge SDK Contributors"},
+]
+
+keywords = ["georgia", "rs.ge", "waybill", "ზედნადები", "customs", "revenue-service", "tax"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Office/Business :: Financial",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed",
+]
+dependencies = [
+    "requests>=2.28.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0",
+    "types-requests",
+]
+
+[project.urls]
+Documentation = "https://github.com/your-org/rsge-sdk#readme"
+Repository = "https://github.com/your-org/rsge-sdk"
+Issues = "https://github.com/your-org/rsge-sdk/issues"
+
+[tool.setuptools.packages.find]
+include = ["rsge*"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP", "D"]
+ignore = ["D100", "D104"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.format]
+quote-style = "single"
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+warn_return_any = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
