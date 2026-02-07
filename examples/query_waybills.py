@@ -1,5 +1,4 @@
-"""
-Query waybills from both seller and buyer perspectives.
+"""Query waybills from both seller and buyer perspectives.
 
 Demonstrates listing waybills with filters and retrieving
 full waybill details by ID.

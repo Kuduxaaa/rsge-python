@@ -1,5 +1,4 @@
-"""
-Retrieve customs declarations via the REST API.
+"""Retrieve customs declarations via the REST API.
 
 Demonstrates authenticating with the customs API,
 fetching declarations by date range, and signing out.

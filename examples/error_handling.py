@@ -1,14 +1,13 @@
-"""
-Error handling patterns for the RS.ge SDK.
+"""Error handling patterns for the RS.ge SDK.
 
 Demonstrates catching authentication errors, API errors,
 and unexpected exceptions when using the SDK.
 """
 
 from rsge import (
-    WayBillClient,
-    RSGeAuthenticationError,
     RSGeAPIError,
+    RSGeAuthenticationError,
+    WayBillClient,
 )
 
 

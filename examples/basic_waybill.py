@@ -1,15 +1,14 @@
-"""
-Basic waybill workflow: create, add goods, save, activate, and close.
+"""Basic waybill workflow: create, add goods, save, activate, and close.
 
 Demonstrates the full lifecycle of an electronic commodity waybill
 using the RS.ge WayBill SOAP service.
 """
 
 from rsge import (
+    TransportCostPayer,
+    VATType,
     WayBillClient,
     WayBillType,
-    VATType,
-    TransportCostPayer,
 )
 
 

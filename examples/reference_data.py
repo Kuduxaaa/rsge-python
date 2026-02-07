@@ -1,5 +1,4 @@
-"""
-Fetch reference/lookup data from the RS.ge API.
+"""Fetch reference/lookup data from the RS.ge API.
 
 Demonstrates retrieving measurement units, transport types,
 and looking up taxpayer names by TIN.

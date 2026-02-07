@@ -1,5 +1,4 @@
-"""
-Buyer confirms or rejects received waybills.
+"""Buyer confirms or rejects received waybills.
 
 Demonstrates querying unconfirmed waybills as a buyer
 and confirming or rejecting them.

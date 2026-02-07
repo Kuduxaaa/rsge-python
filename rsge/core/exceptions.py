@@ -1,5 +1,4 @@
-"""
-Core exception classes for the RS.ge SDK.
+"""Core exception classes for the RS.ge SDK.
 
 All exceptions raised by the SDK inherit from RSGeError,
 making it easy to catch any SDK-specific error in a single handler.
@@ -7,8 +6,7 @@ making it easy to catch any SDK-specific error in a single handler.
 
 
 class RSGeError(Exception):
-    """
-    Base exception for all RS.ge SDK errors.
+    """Base exception for all RS.ge SDK errors.
 
     Attributes:
         message: Human-readable error description.
@@ -22,30 +20,20 @@ class RSGeError(Exception):
 
 
 class RSGeAuthenticationError(RSGeError):
-    """
-    Raised when authentication with the RS.ge service fails.
-    """
+    """Raised when authentication with the RS.ge service fails."""
 
 
 class RSGeValidationError(RSGeError):
-    """
-    Raised when input data fails validation.
-    """
+    """Raised when input data fails validation."""
 
 
 class RSGeAPIError(RSGeError):
-    """
-    Raised when the RS.ge API returns a business-logic error.
-    """
+    """Raised when the RS.ge API returns a business-logic error."""
 
 
 class RSGeConnectionError(RSGeError):
-    """
-    Raised when the SDK cannot reach the RS.ge servers.
-    """
+    """Raised when the SDK cannot reach the RS.ge servers."""
 
 
 class RSGePermissionError(RSGeError):
-    """
-    Raised when the user lacks permission for the requested operation.
-    """
+    """Raised when the user lacks permission for the requested operation."""

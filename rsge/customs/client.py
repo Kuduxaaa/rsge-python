@@ -1,5 +1,4 @@
-"""
-Client for the RS.ge Customs Declarations REST API.
+"""Client for the RS.ge Customs Declarations REST API.
 
 This API provides access to assessed customs declarations data
 using OAuth2-style bearer token authentication.
@@ -22,8 +21,7 @@ _DEFAULT_BASE_URL = 'https://services.rs.ge'
 
 
 class CustomsClient:
-    """
-    Client for the RS.ge Customs Declarations REST API.
+    """Client for the RS.ge Customs Declarations REST API.
 
     Supports both one-factor and two-factor authentication flows.
 
@@ -48,10 +46,7 @@ class CustomsClient:
 
     @property
     def is_authenticated(self) -> bool:
-        """
-        Whether an access token is currently set.
-        """
-
+        """Whether an access token is currently set."""
         return bool(self._access_token)
 
     def authenticate(
@@ -60,8 +55,7 @@ class CustomsClient:
         password: str,
         device_code: str = '',
     ) -> CustomsAuthResponse:
-        """
-        Authenticate with the customs API (one-factor).
+        """Authenticate with the customs API (one-factor).
 
         Args:
             username: Portal username.
@@ -74,7 +68,6 @@ class CustomsClient:
         Raises:
             RSGeAuthenticationError: If credentials are invalid.
         """
-
         payload: dict[str, str] = {
             'USERNAME': username,
             'PASSWORD': password,
@@ -102,8 +95,7 @@ class CustomsClient:
         browser: str = '',
         oper_system: str = '',
     ) -> CustomsAuthResponse:
-        """
-        Complete two-factor authentication with a PIN.
+        """Complete two-factor authentication with a PIN.
 
         Args:
             pin_token: Token from the first authentication step.
@@ -117,7 +109,6 @@ class CustomsClient:
         Returns:
             CustomsAuthResponse with the access token.
         """
-
         payload: dict[str, str] = {
             'PIN_TOKEN': pin_token,
             'PIN': pin,
@@ -137,13 +128,11 @@ class CustomsClient:
         return response
 
     def sign_out(self) -> bool:
-        """
-        Sign out and invalidate the current access token.
+        """Sign out and invalidate the current access token.
 
         Returns:
             True if sign-out succeeded.
         """
-
         if not self._access_token:
             return True
 
@@ -161,8 +150,7 @@ class CustomsClient:
         date_from: str,
         date_to: str,
     ) -> list[CustomsDeclaration]:
-        """
-        Retrieve assessed customs declarations for a date range.
+        """Retrieve assessed customs declarations for a date range.
 
         Args:
             date_from: Start date (ISO format).
@@ -175,7 +163,6 @@ class CustomsClient:
             RSGeAuthenticationError: If not authenticated.
             RSGeAPIError: On API errors.
         """
-
         if not self._access_token:
             raise RSGeAuthenticationError('Not authenticated. Call authenticate() first.')
 
@@ -208,8 +195,7 @@ class CustomsClient:
         return []
 
     def _post(self, path: str, payload: dict[str, Any]) -> dict[str, Any]:
-        """
-        Send a POST request and return the parsed JSON response.
+        """Send a POST request and return the parsed JSON response.
 
         Args:
             path: API endpoint path.
@@ -218,7 +204,6 @@ class CustomsClient:
         Returns:
             Parsed response dict.
         """
-
         try:
             response = self._session.post(
                 f'{self._base_url}{path}',
@@ -236,10 +221,7 @@ class CustomsClient:
         return response.json()
 
     def close(self) -> None:
-        """
-        Close the underlying HTTP session.
-        """
-
+        """Close the underlying HTTP session."""
         self._session.close()
 
     def __enter__(self) -> CustomsClient:

@@ -1,6 +1,4 @@
-"""
-Data models for the RS.ge Customs Declarations REST API.
-"""
+"""Data models for the RS.ge Customs Declarations REST API."""
 
 from __future__ import annotations
 
@@ -10,8 +8,7 @@ from typing import Any
 
 @dataclass
 class CustomsAuthResponse:
-    """
-    Authentication response from the customs API.
+    """Authentication response from the customs API.
 
     Attributes:
         access_token: Bearer token for subsequent requests.
@@ -25,10 +22,7 @@ class CustomsAuthResponse:
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> CustomsAuthResponse:
-        """
-        Parse from the API JSON response.
-        """
-
+        """Parse from the API JSON response."""
         status_data = data.get('STATUS', {})
         token_data = data.get('DATA', {})
         return cls(
@@ -40,8 +34,7 @@ class CustomsAuthResponse:
 
 @dataclass
 class CustomsDeclaration:
-    """
-    A single customs declaration record.
+    """A single customs declaration record.
 
     Attributes:
         declaration_number: Unique declaration number.
@@ -79,10 +72,7 @@ class CustomsDeclaration:
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> CustomsDeclaration:
-        """
-        Parse from the API JSON response dict.
-        """
-
+        """Parse from the API JSON response dict."""
         return cls(
             declaration_number  = str(data.get('DECLARATION_NUMBER', '')),
             assessment_date     = str(data.get('ASSESSMENT_DATE', '')),

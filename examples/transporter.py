@@ -1,5 +1,4 @@
-"""
-Waybill with transporter workflow.
+"""Waybill with transporter workflow.
 
 Demonstrates the full flow: seller creates and forwards a waybill
 to a transporter company, then the transporter activates and closes it.

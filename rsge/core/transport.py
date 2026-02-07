@@ -1,5 +1,4 @@
-"""
-Low-level SOAP transport for communicating with the RS.ge WayBill service.
+"""Low-level SOAP transport for communicating with the RS.ge WayBill service.
 
 Handles HTTP request construction, SOAP envelope wrapping/unwrapping,
 and basic error handling at the transport level.
@@ -27,8 +26,7 @@ _NAMESPACE = 'http://tempuri.org/'
 
 
 class SOAPTransport:
-    """
-    Low-level SOAP client for the RS.ge WayBill web service.
+    """Low-level SOAP client for the RS.ge WayBill web service.
 
     Args:
         base_url: The WSDL endpoint URL.
@@ -56,8 +54,7 @@ class SOAPTransport:
         params: dict[str, Any] | None = None,
         xml_params: dict[str, str] | None = None,
     ) -> ET.Element:
-        """
-        Invoke a SOAP method and return the parsed response body.
+        """Invoke a SOAP method and return the parsed response body.
 
         Args:
             method: The SOAP action / method name.
@@ -70,7 +67,6 @@ class SOAPTransport:
         Raises:
             RSGeConnectionError: On network or HTTP errors.
         """
-
         body_xml = self._build_body(method, params, xml_params)
         envelope = _SOAP_ENVELOPE.format(body=body_xml)
         soap_action = f'{_NAMESPACE}{method}'
@@ -105,10 +101,7 @@ class SOAPTransport:
         params: dict[str, Any] | None,
         xml_params: dict[str, str] | None,
     ) -> str:
-        """
-        Build the SOAP body XML for a given method call.
-        """
-
+        """Build the SOAP body XML for a given method call."""
         parts: list[str] = [f'<{method} xmlns="{_NAMESPACE}">']
 
         if params:
@@ -132,10 +125,7 @@ class SOAPTransport:
         return '\n'.join(parts)
 
     def _parse_response(self, response_text: str, method: str) -> ET.Element:
-        """
-        Parse the SOAP response and extract the method result element.
-        """
-
+        """Parse the SOAP response and extract the method result element."""
         if response_text.startswith('\ufeff'):
             response_text = response_text[1:]
 
@@ -177,10 +167,7 @@ class SOAPTransport:
         return result_elem
 
     def close(self) -> None:
-        """
-        Close the underlying HTTP session.
-        """
-
+        """Close the underlying HTTP session."""
         self._session.close()
 
     def __enter__(self) -> SOAPTransport:

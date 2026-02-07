@@ -1,5 +1,4 @@
-"""
-Save and reuse waybill templates.
+"""Save and reuse waybill templates.
 
 Demonstrates creating a waybill template, listing templates,
 loading a template, and creating a waybill from it.

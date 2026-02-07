@@ -1,5 +1,4 @@
-"""
-Manage personal barcode and vehicle catalogs.
+"""Manage personal barcode and vehicle catalogs.
 
 Demonstrates registering, listing, and deleting barcodes
 and vehicle numbers in the RS.ge service.

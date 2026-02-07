@@ -1,5 +1,4 @@
-"""
-Data models for the RS.ge WayBill service.
+"""Data models for the RS.ge WayBill service.
 
 All models are plain dataclasses that can be serialized to/from XML
 for communication with the SOAP API.
@@ -14,9 +13,7 @@ from typing import Any
 
 from rsge.core.xml_utils import add_child, build_element, get_decimal, get_int, get_text
 from rsge.waybill.enums import (
-    BusinessStatus,
     CategoryType,
-    ConfirmationStatus,
     TransportCostPayer,
     VATType,
     WayBillStatus,
@@ -25,10 +22,7 @@ from rsge.waybill.enums import (
 
 
 def _safe_enum(enum_cls: type, value: int) -> Any:
-    """
-    Safely convert an integer to an enum member, returning the raw value on failure.
-    """
-
+    """Safely convert an integer to an enum member, returning the raw value on failure."""
     try:
         return enum_cls(value)
     except ValueError:
@@ -37,8 +31,7 @@ def _safe_enum(enum_cls: type, value: int) -> Any:
 
 @dataclass
 class ServiceUser:
-    """
-    A registered service user account.
+    """A registered service user account.
 
     Attributes:
         id: Service user ID.
@@ -56,10 +49,7 @@ class ServiceUser:
 
     @classmethod
     def from_xml(cls, elem: ET.Element) -> ServiceUser:
-        """
-        Parse a ServiceUser XML element.
-        """
-
+        """Parse a ServiceUser XML element."""
         return cls(
             id        = get_int(elem, 'ID'),
             user_name = get_text(elem, 'USER_NAME'),
@@ -71,8 +61,7 @@ class ServiceUser:
 
 @dataclass
 class AkcizCode:
-    """
-    Excise (akciz) commodity code.
+    """Excise (akciz) commodity code.
 
     Attributes:
         id: Excise code ID.
@@ -90,10 +79,7 @@ class AkcizCode:
 
     @classmethod
     def from_xml(cls, elem: ET.Element) -> AkcizCode:
-        """
-        Parse an AKCIZ_CODE XML element.
-        """
-
+        """Parse an AKCIZ_CODE XML element."""
         return cls(
             id             = get_int(elem, 'ID'),
             title          = get_text(elem, 'TITLE'),
@@ -105,8 +91,7 @@ class AkcizCode:
 
 @dataclass
 class WayBillTypeInfo:
-    """
-    Waybill type reference record.
+    """Waybill type reference record.
 
     Attributes:
         id: Type ID.
@@ -118,10 +103,7 @@ class WayBillTypeInfo:
 
     @classmethod
     def from_xml(cls, elem: ET.Element) -> WayBillTypeInfo:
-        """
-        Parse a WAYBILL_TYPE XML element.
-        """
-
+        """Parse a WAYBILL_TYPE XML element."""
         return cls(
             id   = get_int(elem, 'ID'),
             name = get_text(elem, 'NAME'),
@@ -130,8 +112,7 @@ class WayBillTypeInfo:
 
 @dataclass
 class WayBillUnit:
-    """
-    Measurement unit reference record.
+    """Measurement unit reference record.
 
     Attributes:
         id: Unit ID.
@@ -143,10 +124,7 @@ class WayBillUnit:
 
     @classmethod
     def from_xml(cls, elem: ET.Element) -> WayBillUnit:
-        """
-        Parse a WAYBILL_UNIT XML element.
-        """
-
+        """Parse a WAYBILL_UNIT XML element."""
         return cls(
             id   = get_int(elem, 'ID'),
             name = get_text(elem, 'NAME'),
@@ -155,8 +133,7 @@ class WayBillUnit:
 
 @dataclass
 class TransportType:
-    """
-    Transport type reference record.
+    """Transport type reference record.
 
     Attributes:
         id: Transport type ID.
@@ -168,10 +145,7 @@ class TransportType:
 
     @classmethod
     def from_xml(cls, elem: ET.Element) -> TransportType:
-        """
-        Parse a TRANSPORT_TYPE XML element.
-        """
-
+        """Parse a TRANSPORT_TYPE XML element."""
         return cls(
             id   = get_int(elem, 'ID'),
             name = get_text(elem, 'NAME'),
@@ -180,8 +154,7 @@ class TransportType:
 
 @dataclass
 class WoodType:
-    """
-    Wood/timber type reference record.
+    """Wood/timber type reference record.
 
     Attributes:
         id: Wood type ID.
@@ -195,10 +168,7 @@ class WoodType:
 
     @classmethod
     def from_xml(cls, elem: ET.Element) -> WoodType:
-        """
-        Parse a WOOD_TYPES XML element.
-        """
-
+        """Parse a WOOD_TYPES XML element."""
         return cls(
             id          = get_int(elem, 'ID'),
             name        = get_text(elem, 'NAME'),
@@ -208,8 +178,7 @@ class WoodType:
 
 @dataclass
 class ErrorCode:
-    """
-    API error code reference.
+    """API error code reference.
 
     Attributes:
         id: Numeric error code (negative).
@@ -223,10 +192,7 @@ class ErrorCode:
 
     @classmethod
     def from_xml(cls, elem: ET.Element) -> ErrorCode:
-        """
-        Parse a WAYBILL_TYPE error code element.
-        """
-
+        """Parse a WAYBILL_TYPE error code element."""
         return cls(
             id         = get_int(elem, 'ID'),
             text       = get_text(elem, 'TEXT'),
@@ -236,8 +202,7 @@ class ErrorCode:
 
 @dataclass
 class GoodsItem:
-    """
-    A single goods/product line item within a waybill.
+    """A single goods/product line item within a waybill.
 
     Attributes:
         id: Record ID (0 for new items).
@@ -272,10 +237,7 @@ class GoodsItem:
     wood_type_id: int = 0
 
     def to_xml(self) -> ET.Element:
-        """
-        Serialize this goods item to an XML GOODS element.
-        """
-
+        """Serialize this goods item to an XML GOODS element."""
         goods = build_element('GOODS')
         add_child(goods, 'ID', self.id)
         add_child(goods, 'W_NAME', self.name)
@@ -295,10 +257,7 @@ class GoodsItem:
 
     @classmethod
     def from_xml(cls, elem: ET.Element) -> GoodsItem:
-        """
-        Parse a GOODS XML element.
-        """
-
+        """Parse a GOODS XML element."""
         return cls(
             id           = get_int(elem, 'ID'),
             name         = get_text(elem, 'W_NAME'),
@@ -319,8 +278,7 @@ class GoodsItem:
 
 @dataclass
 class WoodDocument:
-    """
-    A wood-origin document attached to a timber waybill.
+    """A wood-origin document attached to a timber waybill.
 
     Attributes:
         id: Record ID (0 for new).
@@ -337,10 +295,7 @@ class WoodDocument:
     status: int = 1
 
     def to_xml(self) -> ET.Element:
-        """
-        Serialize to a WOODDOCUMENT XML element.
-        """
-
+        """Serialize to a WOODDOCUMENT XML element."""
         doc = build_element('WOODDOCUMENT')
         add_child(doc, 'ID', self.id)
         add_child(doc, 'DOC_N', self.doc_number)
@@ -352,10 +307,7 @@ class WoodDocument:
 
     @classmethod
     def from_xml(cls, elem: ET.Element) -> WoodDocument:
-        """
-        Parse a WOODDOCUMENT XML element.
-        """
-
+        """Parse a WOODDOCUMENT XML element."""
         date_str = get_text(elem, 'DOC_DATE')
         doc_date = None
         if date_str:
@@ -375,8 +327,7 @@ class WoodDocument:
 
 @dataclass
 class SubWayBill:
-    """
-    Reference to a sub-waybill under a distribution waybill.
+    """Reference to a sub-waybill under a distribution waybill.
 
     Attributes:
         id: Sub-waybill ID.
@@ -388,10 +339,7 @@ class SubWayBill:
 
     @classmethod
     def from_xml(cls, elem: ET.Element) -> SubWayBill:
-        """
-        Parse a SUB_WAYBILL XML element.
-        """
-
+        """Parse a SUB_WAYBILL XML element."""
         return cls(
             id             = get_int(elem, 'ID'),
             waybill_number = get_text(elem, 'WAYBILL_NUMBER'),
@@ -400,8 +348,7 @@ class SubWayBill:
 
 @dataclass
 class WayBill:
-    """
-    Complete electronic commodity waybill.
+    """Complete electronic commodity waybill.
 
     Attributes:
         id: Waybill ID (0 for new waybills).
@@ -496,8 +443,7 @@ class WayBill:
         vat_type: VATType = VATType.REGULAR,
         quantity_ext: float = 0,
     ) -> GoodsItem:
-        """
-        Add a goods item to this waybill.
+        """Add a goods item to this waybill.
 
         Args:
             name: Product name.
@@ -513,7 +459,6 @@ class WayBill:
         Returns:
             The newly created GoodsItem.
         """
-
         item = GoodsItem(
             name         = name,
             unit_id      = unit_id,
@@ -537,8 +482,7 @@ class WayBill:
         doc_date: datetime,
         doc_description: str,
     ) -> WoodDocument:
-        """
-        Add a wood-origin document to this waybill.
+        """Add a wood-origin document to this waybill.
 
         Args:
             doc_number: Document number.
@@ -548,7 +492,6 @@ class WayBill:
         Returns:
             The newly created WoodDocument.
         """
-
         doc = WoodDocument(
             doc_number      = doc_number,
             doc_date        = doc_date,
@@ -559,22 +502,17 @@ class WayBill:
         return doc
 
     def _recalculate_total(self) -> None:
-        """
-        Recalculate full_amount from goods list.
-        """
-
+        """Recalculate full_amount from goods list."""
         self.full_amount = round(
             sum(g.amount for g in self.goods_list if g.status == 1), 2
         )
 
     def to_xml(self) -> ET.Element:
-        """
-        Serialize this waybill to the XML format expected by save_waybill.
+        """Serialize this waybill to the XML format expected by save_waybill.
 
         Returns:
             An ET.Element representing the WAYBILL structure.
         """
-
         wb = build_element('WAYBILL')
 
         sub_wb_elem = add_child(wb, 'SUB_WAYBILLS')
@@ -628,8 +566,7 @@ class WayBill:
 
     @classmethod
     def from_xml(cls, elem: ET.Element) -> WayBill:
-        """
-        Parse a WAYBILL XML response element into a WayBill object.
+        """Parse a WAYBILL XML response element into a WayBill object.
 
         Args:
             elem: The XML element to parse.
@@ -637,7 +574,6 @@ class WayBill:
         Returns:
             A fully populated WayBill instance.
         """
-
         goods_elem = elem.find('GOODS_LIST')
         goods_list = (
             [GoodsItem.from_xml(g) for g in goods_elem.findall('GOODS')]
@@ -679,7 +615,9 @@ class WayBill:
             waybill_number       = get_text(elem, 'WAYBILL_NUMBER'),
             s_user_id            = get_int(elem, 'S_USER_ID'),
             begin_date           = get_text(elem, 'BEGIN_DATE'),
-            transport_cost_payer = _safe_enum(TransportCostPayer, get_int(elem, 'TRAN_COST_PAYER', 2)),
+            transport_cost_payer = _safe_enum(
+                TransportCostPayer, get_int(elem, 'TRAN_COST_PAYER', 2),
+            ),
             transport_type_id    = get_int(elem, 'TRANS_ID'),
             transport_type_txt   = get_text(elem, 'TRANS_TXT'),
             comment              = get_text(elem, 'COMMENT'),
@@ -699,8 +637,7 @@ class WayBill:
 
 @dataclass
 class WayBillSaveResult:
-    """
-    Result returned by WayBillClient.save_waybill.
+    """Result returned by WayBillClient.save_waybill.
 
     Attributes:
         status: 0 on success, negative on error.
@@ -714,18 +651,12 @@ class WayBillSaveResult:
 
     @property
     def is_success(self) -> bool:
-        """
-        Whether the save operation succeeded.
-        """
-
+        """Whether the save operation succeeded."""
         return self.status == 0
 
     @classmethod
     def from_xml(cls, elem: ET.Element) -> WayBillSaveResult:
-        """
-        Parse a RESULT XML element.
-        """
-
+        """Parse a RESULT XML element."""
         goods_results: list[dict[str, Any]] = []
         goods_list = elem.find('GOODS_LIST')
         if goods_list is not None:
@@ -746,9 +677,7 @@ class WayBillSaveResult:
 
 @dataclass
 class WayBillListItem:
-    """
-    Summary record from a waybill list query.
-    """
+    """Summary record from a waybill list query."""
 
     id: int = 0
     waybill_type: int = 0
@@ -780,10 +709,7 @@ class WayBillListItem:
 
     @classmethod
     def from_xml(cls, elem: ET.Element) -> WayBillListItem:
-        """
-        Parse a WAYBILL element from a list response.
-        """
-
+        """Parse a WAYBILL element from a list response."""
         return cls(
             id             = get_int(elem, 'ID'),
             waybill_type   = get_int(elem, 'TYPE'),

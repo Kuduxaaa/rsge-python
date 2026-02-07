@@ -1,5 +1,4 @@
-"""
-Distribution waybill with sub-waybills for multi-stop delivery.
+"""Distribution waybill with sub-waybills for multi-stop delivery.
 
 Demonstrates creating a parent distribution waybill and attaching
 child sub-waybills for partial deliveries to different buyers.

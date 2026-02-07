@@ -1,5 +1,4 @@
-"""
-Enumeration types for the RS.ge WayBill service.
+"""Enumeration types for the RS.ge WayBill service.
 
 These enums map the numeric codes used by the RS.ge API to
 human-readable names, preventing magic-number usage throughout
@@ -12,9 +11,7 @@ from enum import IntEnum
 
 
 class WayBillType(IntEnum):
-    """
-    Types of electronic commodity waybills.
-    """
+    """Types of electronic commodity waybills."""
 
     INNER_TRANSPORT = 1
     """
@@ -48,9 +45,7 @@ class WayBillType(IntEnum):
 
 
 class WayBillStatus(IntEnum):
-    """
-    Lifecycle status of a waybill.
-    """
+    """Lifecycle status of a waybill."""
 
     SAVED = 0
     """
@@ -84,9 +79,7 @@ class WayBillStatus(IntEnum):
 
 
 class TransportationType(IntEnum):
-    """
-    Type of transport used for delivery.
-    """
+    """Type of transport used for delivery."""
 
     TRUCK = 1
     """
@@ -110,9 +103,7 @@ class TransportationType(IntEnum):
 
 
 class VATType(IntEnum):
-    """
-    VAT taxation type for goods items.
-    """
+    """VAT taxation type for goods items."""
 
     REGULAR = 0
     """
@@ -131,9 +122,7 @@ class VATType(IntEnum):
 
 
 class CategoryType(IntEnum):
-    """
-    Waybill category.
-    """
+    """Waybill category."""
 
     REGULAR = 0
     """
@@ -147,9 +136,7 @@ class CategoryType(IntEnum):
 
 
 class TransportCostPayer(IntEnum):
-    """
-    Who pays the transportation cost.
-    """
+    """Who pays the transportation cost."""
 
     BUYER = 1
     """
@@ -163,9 +150,7 @@ class TransportCostPayer(IntEnum):
 
 
 class ConfirmationStatus(IntEnum):
-    """
-    Buyer confirmation status for waybill filtering.
-    """
+    """Buyer confirmation status for waybill filtering."""
 
     UNCONFIRMED = 0
     """
@@ -184,9 +169,7 @@ class ConfirmationStatus(IntEnum):
 
 
 class BusinessStatus(IntEnum):
-    """
-    Taxpayer business status.
-    """
+    """Taxpayer business status."""
 
     NONE = 0
     """
@@ -205,9 +188,7 @@ class BusinessStatus(IntEnum):
 
 
 class CustomsConfirmStatus(IntEnum):
-    """
-    Customs checkpoint confirmation status.
-    """
+    """Customs checkpoint confirmation status."""
 
     CONFIRMED = 1
     """
