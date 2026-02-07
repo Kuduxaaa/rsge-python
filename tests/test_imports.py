@@ -18,21 +18,27 @@ def test_customs_client_importable():
 
 def test_enums_importable():
     from rsge import (
-        WayBillType,
-        WayBillStatus,
-        TransportationType,
-        VATType,
-        CategoryType,
-        TransportCostPayer,
-        ConfirmationStatus,
         BusinessStatus,
+        CategoryType,
+        ConfirmationStatus,
+        TransportationType,
+        TransportCostPayer,
+        VATType,
+        WayBillStatus,
+        WayBillType,
     )
     assert WayBillType.TRANSPORTATION == 2
     assert WayBillStatus.ACTIVE == 1
+    assert BusinessStatus.NONE == 0
+    assert CategoryType.REGULAR == 0
+    assert ConfirmationStatus.UNCONFIRMED == 0
+    assert TransportationType.TRUCK == 1
+    assert TransportCostPayer.BUYER == 1
+    assert VATType.REGULAR == 0
 
 
 def test_models_importable():
-    from rsge import WayBill, GoodsItem, WayBillSaveResult, CustomsDeclaration
+    from rsge import CustomsDeclaration, GoodsItem, WayBill, WayBillSaveResult
     assert WayBill
     assert GoodsItem
     assert WayBillSaveResult
@@ -41,11 +47,11 @@ def test_models_importable():
 
 def test_exceptions_importable():
     from rsge import (
-        RSGeError,
-        RSGeAuthenticationError,
-        RSGeValidationError,
         RSGeAPIError,
+        RSGeAuthenticationError,
         RSGeConnectionError,
+        RSGeError,
+        RSGeValidationError,
     )
     assert issubclass(RSGeAuthenticationError, RSGeError)
     assert issubclass(RSGeValidationError, RSGeError)
