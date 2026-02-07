@@ -1,7 +1,9 @@
 # RS.ge Python SDK
 
+[![PyPI version](https://img.shields.io/pypi/v/rsge-python.svg)](https://pypi.org/project/rsge-python/)
+[![PyPI downloads](https://img.shields.io/pypi/dm/rsge-python.svg)](https://pypi.org/project/rsge-python/)
+[![Python](https://img.shields.io/pypi/pyversions/rsge-python.svg)](https://pypi.org/project/rsge-python/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Python](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/downloads/)
 [![CI](https://github.com/kuduxaaa/rsge-python/actions/workflows/ci.yml/badge.svg)](https://github.com/kuduxaaa/rsge-python/actions/workflows/ci.yml)
 
 Python SDK for the **Georgian Revenue Service** (სსიპ შემოსავლების სამსახური) electronic services.
