@@ -22,7 +22,7 @@ def build_element(tag: str, text: str | None = None, **attribs: str) -> ET.Eleme
     Returns:
         A new ET.Element instance.
     """
-    elem = ET.Element(tag, **attribs)
+    elem = ET.Element(tag, dict(attribs))
     if text is not None:
         elem.text = str(text)
     return elem

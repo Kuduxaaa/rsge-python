@@ -176,8 +176,10 @@ class CustomsClient:
             )
 
             response.raise_for_status()
+
         except requests.exceptions.ConnectionError as exc:
             raise RSGeConnectionError(f'Connection failed: {exc}') from exc
+
         except requests.exceptions.HTTPError as exc:
             raise RSGeAPIError(f'HTTP error: {exc.response.status_code}') from exc
 
@@ -186,12 +188,13 @@ class CustomsClient:
         if status.get('CODE', 0) != 0:
             raise RSGeAPIError(
                 f"API error: {status.get('MESSAGE', 'Unknown error')}",
-                code=status.get('CODE'),
+                code = status.get('CODE'),
             )
 
         items = data.get('DATA', [])
         if isinstance(items, list):
             return [CustomsDeclaration.from_dict(item) for item in items]
+
         return []
 
     def _post(self, path: str, payload: dict[str, Any]) -> dict[str, Any]:
@@ -212,13 +215,16 @@ class CustomsClient:
             )
 
             response.raise_for_status()
+
         except requests.exceptions.ConnectionError as exc:
             raise RSGeConnectionError(f'Connection failed: {exc}') from exc
+
         except requests.exceptions.HTTPError as exc:
             status_code = exc.response.status_code if exc.response else 0
             raise RSGeAPIError(f'HTTP error: {status_code}') from exc
 
-        return response.json()
+        result: dict[str, Any] = response.json()
+        return result
 
     def close(self) -> None:
         """Close the underlying HTTP session."""
