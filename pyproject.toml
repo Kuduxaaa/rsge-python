@@ -10,7 +10,7 @@ readme = "README.md"
 license = {text = "MIT"}
 requires-python = ">=3.10"
 authors = [
-    {name = "RS.ge SDK Contributors"},
+    {name = "Kuduxaaa", email = "imkuduxaaa@gmail.com"},
 ]
 
 keywords = ["georgia", "rs.ge", "waybill", "ზედნადები", "customs", "revenue-service", "tax"]
@@ -41,9 +41,9 @@ dev = [
 ]
 
 [project.urls]
-Documentation = "https://github.com/your-org/rsge-sdk#readme"
-Repository = "https://github.com/your-org/rsge-sdk"
-Issues = "https://github.com/your-org/rsge-sdk/issues"
+Documentation = "https://github.com/kuduxaaa/rsge-python#readme"
+Repository = "https://github.com/kuduxaaa/rsge-python"
+Issues = "https://github.com/kuduxaaa/rsge-python/issues"
 
 [tool.setuptools.packages.find]
 include = ["rsge*"]

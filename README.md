@@ -1,6 +1,11 @@
 # RS.ge Python SDK
 
-Python SDK for the **Georgian Revenue Service** (სსიპ შემოსავლების სამსახური) electronic services, providing complete integration with:
+[![PyPI version](https://img.shields.io/pypi/v/rsge-sdk.svg)](https://pypi.org/project/rsge-sdk/)
+[![Python](https://img.shields.io/pypi/pyversions/rsge-sdk.svg)](https://pypi.org/project/rsge-sdk/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![CI](https://github.com/kuduxaaa/rsge-python/actions/workflows/ci.yml/badge.svg)](https://github.com/kuduxaaa/rsge-python/actions/workflows/ci.yml)
+
+Python SDK for the **Georgian Revenue Service** (სსიპ შემოსავლების სამსახური) electronic services.
 
 - **WayBill Service** (ელექტრონული ზედნადები) — SOAP/XML API for electronic commodity waybills
 - **Customs Declarations** (საბაჟო დეკლარაციები) — REST/JSON API for customs declaration data
@@ -14,10 +19,18 @@ pip install rsge-sdk
 Or install from source:
 
 ```bash
-git clone https://github.com/kuduxaaa/rsge-sdk.git
-cd rsge-sdk
+git clone https://github.com/kuduxaaa/rsge-python.git
+cd rsge-python
+pip install -e .
+```
+
+For development (includes pytest, ruff, mypy):
+
+```bash
 pip install -e ".[dev]"
 ```
+
+**Requirements:** Python 3.10+
 
 ## Quick Start
 
@@ -26,49 +39,37 @@ pip install -e ".[dev]"
 ```python
 from rsge import WayBillClient, WayBillType, VATType
 
-# Initialize client (test credentials from RS.ge documentation)
-client = WayBillClient(
-    service_user="tbilisi",
-    service_password="123456",
-)
+with WayBillClient('your_service_user', 'your_service_password') as client:
+    # Verify credentials
+    un_id, s_user_id = client.check_service_user()
+    print(f'Taxpayer ID: {un_id}, User ID: {s_user_id}')
 
-# Verify credentials
-un_id, s_user_id = client.check_service_user()
-print(f"Taxpayer ID: {un_id}, User ID: {s_user_id}")
+    # Create a waybill
+    waybill = client.create_waybill(
+        waybill_type  = WayBillType.TRANSPORTATION,
+        buyer_tin     = '12345678901',
+        start_address = 'Tbilisi, Rustaveli Ave 1',
+        end_address   = 'Batumi, Chavchavadze St 5',
+        driver_tin    = '01234567890',
+        car_number    = 'AB-123-CD',
+    )
 
-# Create a waybill
-waybill = client.create_waybill(
-    waybill_type=WayBillType.TRANSPORTATION,
-    buyer_tin="12345678910",
-    buyer_name="გიორგი გიორგაძე",
-    start_address="თბილისი, საბურთალოს ქუჩა",
-    end_address="თბილისი, გულუას ქუჩა",
-    driver_tin="11111111111",
-    driver_name="ბახვა ხორავა",
-    car_number="AAA555",
-)
+    # Add goods
+    waybill.add_goods(
+        name     = 'Office Supplies',
+        unit_id  = 1,
+        quantity = 10,
+        price    = 25.50,
+        bar_code = '5901234123457',
+        vat_type = VATType.REGULAR,
+    )
 
-# Add goods items
-waybill.add_goods(
-    name="შაქარი",
-    unit_id=2,          # kg
-    quantity=1000,
-    price=1.0,
-    bar_code="001",
-    vat_type=VATType.REGULAR,
-)
-
-# Save to RS.ge
-result = client.save_waybill(waybill)
-if result.is_success:
-    print(f"Waybill saved! ID: {result.waybill_id}")
-
-    # Activate (start transport)
-    wb_number = client.activate_waybill(result.waybill_id)
-    print(f"Waybill number: {wb_number}")
-
-    # Close (complete delivery)
-    client.close_waybill(result.waybill_id)
+    # Save, activate, close
+    result = client.save_waybill(waybill)
+    if result.is_success:
+        wb_number = client.activate_waybill(result.waybill_id)
+        print(f'Waybill number: {wb_number}')
+        client.close_waybill(result.waybill_id)
 ```
 
 ### Customs Declarations
@@ -76,18 +77,16 @@ if result.is_success:
 ```python
 from rsge import CustomsClient
 
-client = CustomsClient()
-client.authenticate("username", "password")
+with CustomsClient() as client:
+    auth = client.authenticate('username', 'password')
 
-declarations = client.get_declarations(
-    date_from="2024-01-01",
-    date_to="2024-01-31",
-)
+    declarations = client.get_declarations(
+        date_from = '2024-01-01',
+        date_to   = '2024-01-31',
+    )
 
-for decl in declarations:
-    print(f"{decl.declaration_number}: {decl.description} = {decl.customs_value}")
-
-client.sign_out()
+    for decl in declarations:
+        print(f'{decl.declaration_number}: {decl.description} = {decl.customs_value}')
 ```
 
 ## Documentation
@@ -101,74 +100,59 @@ client.sign_out()
 | [Enums](docs/enums.md) | All enum types with values and Georgian descriptions |
 | [Exceptions](docs/exceptions.md) | Exception hierarchy and error handling patterns |
 
-## API Reference
+## API Overview
 
-### WayBillClient Methods
+### WayBillClient
+
+| Category | Methods |
+|----------|---------|
+| **Auth** | `check_service_user()`, `get_service_users()`, `update_service_user()` |
+| **CRUD** | `create_waybill()`, `save_waybill()`, `get_waybill()`, `get_waybills()`, `get_buyer_waybills()` |
+| **Lifecycle** | `activate_waybill()`, `close_waybill()`, `delete_waybill()`, `cancel_waybill()` |
+| **Buyer** | `confirm_waybill()`, `reject_waybill()` |
+| **Transporter** | `save_waybill_transporter()`, `activate_waybill_transporter()`, `close_waybill_transporter()` |
+| **Invoice** | `save_invoice()` |
+| **Templates** | `save_waybill_template()`, `get_waybill_templates()`, `get_waybill_template()`, `delete_waybill_template()` |
+| **Catalog** | `save_bar_code()`, `delete_bar_code()`, `get_bar_codes()` |
+| **Vehicles** | `save_car_number()`, `delete_car_number()`, `get_car_numbers()` |
+| **Reference** | `get_akciz_codes()`, `get_waybill_types()`, `get_waybill_units()`, `get_transport_types()`, `get_wood_types()`, `get_error_codes()`, `get_name_from_tin()` |
+
+### CustomsClient
 
 | Method | Description |
 |--------|-------------|
-| `check_service_user()` | Verify credentials, get `(un_id, s_user_id)` |
-| `update_service_user()` | Update service user registration |
-| `get_service_users()` | List service users |
-| **Reference Data** | |
-| `get_akciz_codes()` | Excise commodity codes |
-| `get_waybill_types()` | Waybill type reference |
-| `get_waybill_units()` | Measurement units |
-| `get_transport_types()` | Transportation types |
-| `get_wood_types()` | Wood/timber types |
-| `get_error_codes()` | Error code reference |
-| `get_name_from_tin(tin)` | Look up name by TIN |
-| **Waybill CRUD** | |
-| `create_waybill(...)` | Create waybill in memory |
-| `save_waybill(waybill)` | Save/update on server |
-| `get_waybill(id)` | Retrieve single waybill |
-| `get_waybills(...)` | List seller-side waybills |
-| `get_buyer_waybills(...)` | List buyer-side waybills |
-| `get_waybills_ex(...)` | Extended seller list with confirmation filter |
-| `get_buyer_waybills_ex(...)` | Extended buyer list |
-| `get_waybills_v1(...)` | List by last-update date (max 3 days) |
-| **Lifecycle** | |
-| `activate_waybill(id)` | Start transportation |
-| `activate_waybill_with_date(id, date)` | Activate with specific date |
-| `close_waybill(id)` | Complete delivery |
-| `close_waybill_with_date(id, date)` | Close with delivery date |
-| `delete_waybill(id)` | Delete saved waybill |
-| `cancel_waybill(id)` | Cancel activated waybill |
-| `confirm_waybill(id)` | Buyer confirms |
-| `reject_waybill(id)` | Buyer rejects |
-| **Transporter** | |
-| `save_waybill_transporter(...)` | Fill transporter fields |
-| `activate_waybill_transporter(...)` | Activate as transporter |
-| `close_waybill_transporter(...)` | Close as transporter |
-| **Invoice** | |
-| `save_invoice(waybill_id)` | Issue tax invoice from waybill |
-| **Templates & Catalog** | |
-| `save_waybill_template(name, wb)` | Save reusable template |
-| `get_waybill_templates()` | List templates |
-| `save_bar_code(...)` | Add to barcode catalog |
-| `save_car_number(number)` | Register vehicle |
+| `authenticate()` | One-factor login |
+| `authenticate_pin()` | Two-factor PIN verification |
+| `get_declarations()` | Retrieve assessed declarations by date range |
+| `sign_out()` | Invalidate token |
 
-### WayBill Types
+### WayBill Types & Statuses
 
-| Type | Value | Description |
-|------|-------|-------------|
-| `INNER_TRANSPORT` | 1 | Internal transfer |
-| `TRANSPORTATION` | 2 | Delivery with transport |
-| `WITHOUT_TRANSPORTATION` | 3 | Delivery without transport |
-| `DISTRIBUTION` | 4 | Distribution (main + sub-waybills) |
-| `RETURN` | 5 | Goods return |
-| `SUB_WAYBILL` | 6 | Sub-waybill (child of distribution) |
+| Type | Value | | Status | Value |
+|------|-------|-|--------|-------|
+| `INNER_TRANSPORT` | 1 | | `SAVED` | 0 |
+| `TRANSPORTATION` | 2 | | `ACTIVE` | 1 |
+| `WITHOUT_TRANSPORTATION` | 3 | | `COMPLETED` | 2 |
+| `DISTRIBUTION` | 4 | | `SENT_TO_TRANSPORTER` | 8 |
+| `RETURN` | 5 | | `DELETED` | -1 |
+| `SUB_WAYBILL` | 6 | | `CANCELLED` | -2 |
 
-### Status Codes
+## Error Handling
 
-| Status | Value | Description |
-|--------|-------|-------------|
-| `SAVED` | 0 | Draft |
-| `ACTIVE` | 1 | Transportation started |
-| `COMPLETED` | 2 | Delivered |
-| `SENT_TO_TRANSPORTER` | 8 | Forwarded to carrier |
-| `DELETED` | -1 | Deleted |
-| `CANCELLED` | -2 | Voided |
+```python
+from rsge import RSGeError, RSGeAuthenticationError, RSGeAPIError, RSGeConnectionError
+
+try:
+    result = client.save_waybill(waybill)
+except RSGeAuthenticationError:
+    print('Invalid credentials')
+except RSGeConnectionError:
+    print('Cannot reach RS.ge servers')
+except RSGeAPIError as exc:
+    print(f'API error {exc.code}: {exc.message}')
+except RSGeError as exc:
+    print(f'SDK error: {exc.message}')
+```
 
 ## Project Structure
 
@@ -180,31 +164,25 @@ rsge/
 │   ├── transport.py         # SOAP HTTP transport
 │   └── xml_utils.py         # XML builder/parser helpers
 ├── waybill/
-│   ├── client.py            # WayBillClient (main entry point)
+│   ├── client.py            # WayBillClient
 │   ├── enums.py             # WayBillType, Status, etc.
 │   └── models.py            # WayBill, GoodsItem, etc.
 └── customs/
-    ├── client.py            # CustomsClient (REST API)
+    ├── client.py            # CustomsClient
     └── models.py            # CustomsDeclaration, etc.
 ```
 
-## Testing
+## Contributing
 
 ```bash
+git clone https://github.com/kuduxaaa/rsge-python.git
+cd rsge-python
 pip install -e ".[dev]"
 pytest
+ruff check .
+mypy rsge
 ```
-
-## Test Credentials
-
-From the official RS.ge documentation:
-
-| | Account 1 | Account 2 |
-|---|-----------|-----------|
-| **User** | `tbilisi` | `satesto2` |
-| **Password** | `123456` | `123456` |
-| **TIN** | `206322102` | `12345678910` |
 
 ## License
 
-MIT
+[MIT](LICENSE)

@@ -14,8 +14,8 @@ pip install rsge-sdk
 Or install from source:
 
 ```bash
-git clone https://github.com/your-org/rsge-sdk.git
-cd rsge-sdk
+git clone https://github.com/kuduxaaa/rsge-python.git
+cd rsge-python
 pip install -e .
 ```
 
