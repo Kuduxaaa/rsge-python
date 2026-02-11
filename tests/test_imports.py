@@ -16,6 +16,11 @@ def test_customs_client_importable():
     assert CustomsClient
 
 
+def test_invoice_client_importable():
+    from rsge import InvoiceClient
+    assert InvoiceClient
+
+
 def test_enums_importable():
     from rsge import (
         BusinessStatus,
@@ -35,6 +40,50 @@ def test_enums_importable():
     assert TransportationType.TRUCK == 1
     assert TransportCostPayer.BUYER == 1
     assert VATType.REGULAR == 0
+
+
+def test_invoice_enums_importable():
+    from rsge import (
+        CorrectReason,
+        InvoiceCategory,
+        InvoiceListType,
+        InvoiceType,
+        InvoiceVATType,
+        ReturnType,
+    )
+    assert InvoiceCategory.GOODS_SERVICE == 1
+    assert InvoiceType.WITH_TRANSPORT == 2
+    assert InvoiceVATType.STANDARD == 0
+    assert InvoiceListType.SELLER_DOCS == 1
+    assert CorrectReason.NONE == 0
+    assert ReturnType.PARTIAL == 0
+
+
+def test_invoice_models_importable():
+    from rsge import (
+        BarCode,
+        Invoice,
+        InvoiceAction,
+        InvoiceAdvance,
+        InvoiceAuthResponse,
+        InvoiceGoods,
+        InvoiceReturn,
+        OrgInfo,
+        SubInvoiceDistribution,
+        TransactionResult,
+        Unit,
+    )
+    assert Invoice
+    assert InvoiceGoods
+    assert InvoiceReturn
+    assert InvoiceAdvance
+    assert SubInvoiceDistribution
+    assert InvoiceAction
+    assert InvoiceAuthResponse
+    assert Unit
+    assert OrgInfo
+    assert BarCode
+    assert TransactionResult
 
 
 def test_models_importable():

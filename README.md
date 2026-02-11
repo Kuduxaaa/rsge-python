@@ -10,6 +10,7 @@ Python SDK for the **Georgian Revenue Service** (სსიპ შემოსა
 
 - **WayBill Service** (ელექტრონული ზედნადები) — SOAP/XML API for electronic commodity waybills
 - **Customs Declarations** (საბაჟო დეკლარაციები) — REST/JSON API for customs declaration data
+- **Invoice / Declaration** (საგადასახადო დოკუმენტი) — REST/JSON API for tax invoices and declarations
 
 ## Installation
 
@@ -90,6 +91,44 @@ with CustomsClient() as client:
         print(f'{decl.declaration_number}: {decl.description} = {decl.customs_value}')
 ```
 
+### Invoice / Declaration Service
+
+```python
+from rsge import InvoiceClient, Invoice, InvoiceCategory, InvoiceType
+
+with InvoiceClient() as client:
+    # Authenticate (supports 2FA)
+    auth = client.authenticate('your_username', 'your_password')
+
+    if auth.needs_pin:
+        pin = input('Enter PIN: ')
+        auth = client.authenticate_pin(auth.pin_token, pin)
+
+    # Create and save an invoice
+    inv = Invoice(
+        inv_category   = InvoiceCategory.GOODS_SERVICE,
+        inv_type       = InvoiceType.WITH_TRANSPORT,
+        operation_date = '10-04-2025 10:00:00',
+        tin_seller     = '206322102',
+        tin_buyer      = '12345678910',
+    )
+
+    inv.add_goods('Office Supplies', quantity=10, unit_price=25.50)
+    inv.add_goods('Printer Paper',   quantity=5,  unit_price=15.00)
+
+    txn_id = client.save_invoice(inv)
+    result = client.get_transaction_result(txn_id)
+    print(f'Saved invoice ID: {result.invoice_id}')
+
+    # List, activate, and manage invoices
+    invoices = client.list_invoices(TYPE=1, MAXIMUM_ROWS=20)
+    client.activate_invoices([result.invoice_id])
+
+    # Look up organization info
+    org = client.get_org_info('206322102')
+    print(f'{org.name} — VAT payer: {org.is_vat_payer}')
+```
+
 ## Documentation
 
 | Guide | Description |
@@ -97,6 +136,7 @@ with CustomsClient() as client:
 | [Getting Started](docs/getting-started.md) | Installation, requirements, quickstart examples |
 | [WayBill Client](docs/waybill-client.md) | Full WayBillClient API reference (40+ methods) |
 | [Customs Client](docs/customs-client.md) | CustomsClient API reference (auth flows, declarations) |
+| [Invoice Client](docs/invoice-client.md) | InvoiceClient API reference (25+ methods, 2FA auth) |
 | [Models](docs/models.md) | All dataclass models with fields and types |
 | [Enums](docs/enums.md) | All enum types with values and Georgian descriptions |
 | [Exceptions](docs/exceptions.md) | Exception hierarchy and error handling patterns |
@@ -126,6 +166,18 @@ with CustomsClient() as client:
 | `authenticate_pin()` | Two-factor PIN verification |
 | `get_declarations()` | Retrieve assessed declarations by date range |
 | `sign_out()` | Invalidate token |
+
+### InvoiceClient
+
+| Category | Methods |
+|----------|---------|
+| **Auth** | `authenticate()`, `authenticate_pin()`, `sign_out()` |
+| **Common** | `get_vat_payer_status()`, `get_org_info()`, `get_units()`, `get_transaction_result()` |
+| **CRUD** | `get_invoice()`, `save_invoice()`, `list_invoices()`, `list_goods()`, `get_invoice_status()` |
+| **Lifecycle** | `activate_invoice()`, `activate_invoices()`, `delete_invoice()`, `cancel_invoice()` |
+| **Buyer** | `confirm_invoice()`, `confirm_invoices()`, `refuse_invoice()`, `refuse_invoices()` |
+| **Barcode** | `list_bar_codes()`, `get_bar_code()`, `clear_bar_codes()` |
+| **Declaration** | `get_seq_num()`, `create_decl()`, `list_excise()` |
 
 ### WayBill Types & Statuses
 
@@ -168,9 +220,13 @@ rsge/
 │   ├── client.py            # WayBillClient
 │   ├── enums.py             # WayBillType, Status, etc.
 │   └── models.py            # WayBill, GoodsItem, etc.
-└── customs/
-    ├── client.py            # CustomsClient
-    └── models.py            # CustomsDeclaration, etc.
+├── customs/
+│   ├── client.py            # CustomsClient
+│   └── models.py            # CustomsDeclaration, etc.
+└── invoice/
+    ├── client.py            # InvoiceClient (eAPI REST)
+    ├── enums.py             # InvoiceCategory, InvoiceType, etc.
+    └── models.py            # Invoice, InvoiceGoods, etc.
 ```
 
 ## Contributing

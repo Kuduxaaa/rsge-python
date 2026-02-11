@@ -1,9 +1,10 @@
 # Models Reference
 
-All models are Python dataclasses that serialize to/from XML (waybill models) or JSON (customs models) for communication with the RS.ge APIs. Import them directly from `rsge`:
+All models are Python dataclasses that serialize to/from XML (waybill models) or JSON (customs and invoice models) for communication with the RS.ge APIs. Import them directly from `rsge`:
 
 ```python
 from rsge import WayBill, GoodsItem, WayBillSaveResult, CustomsDeclaration
+from rsge import Invoice, InvoiceGoods, InvoiceAuthResponse, OrgInfo
 ```
 
 ---
@@ -311,3 +312,261 @@ A single customs declaration record.
 **Methods:**
 
 - `CustomsDeclaration.from_dict(data) -> CustomsDeclaration` — parse from API JSON
+
+---
+
+# Invoice Models
+
+**Source:** `rsge/invoice/models.py`
+
+## `InvoiceAuthResponse`
+
+Authentication response from the eAPI.
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `access_token` | `str` | `''` | Bearer token for subsequent requests |
+| `pin_token` | `str` | `''` | Token for 2FA PIN verification (empty if one-factor) |
+| `masked_mobile` | `str` | `''` | Masked phone number for PIN delivery |
+| `expires_in` | `int` | `0` | Token expiry time in seconds |
+| `status_id` | `int` | `0` | Response status ID (0 = success) |
+| `status_text` | `str` | `''` | Response status message |
+
+**Properties:**
+
+- `needs_pin -> bool` — `True` when `pin_token` is set but `access_token` is empty (2FA required)
+
+**Methods:**
+
+- `InvoiceAuthResponse.from_dict(data) -> InvoiceAuthResponse` — parse from eAPI JSON
+
+**Usage:**
+
+```python
+auth = client.authenticate('user', 'pass')
+if auth.needs_pin:
+    auth = client.authenticate_pin(auth.pin_token, input('PIN: '))
+print(f'Token: {auth.access_token[:20]}...')
+```
+
+---
+
+## `Invoice`
+
+Main invoice/declaration document model. The primary model for creating, saving, and retrieving invoices.
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `id` | `int` | `0` | Invoice ID (0 for new invoices) |
+| `inv_serie` | `str` | `''` | Invoice serie |
+| `inv_number` | `str` | `''` | Invoice number (OUT, assigned on activation) |
+| `inv_category` | `int` | `0` | Invoice category code (see `InvoiceCategory`) |
+| `inv_type` | `int` | `0` | Invoice type code (see `InvoiceType`) |
+| `seller_action` | `int` | `0` | Seller action code (OUT) |
+| `buyer_action` | `int` | `0` | Buyer action code (OUT) |
+| `operation_date` | `str` | `''` | Operation date (`DD-MM-YYYY HH:MM:SS`) |
+| `activate_date` | `str` | `''` | Activation date (OUT) |
+| `create_date` | `str` | `''` | Creation date (OUT) |
+| `correct_reason_id` | `int` | `0` | Correction reason ID (see `CorrectReason`) |
+| `tin_seller` | `str` | `''` | Seller TIN |
+| `tin_buyer` | `str` | `''` | Buyer TIN |
+| `foreign_buyer` | `str` | `'false'` | Whether buyer is foreign |
+| `name_seller` | `str` | `''` | Seller name (OUT) |
+| `name_buyer` | `str` | `''` | Buyer name (OUT) |
+| `amount_full` | `float` | `0` | Total amount |
+| `amount_excise` | `float` | `0` | Total excise amount |
+| `amount_vat` | `float` | `0` | Total VAT amount (OUT) |
+| `trans_start_address` | `str` | `''` | Transport start address |
+| `trans_end_address` | `str` | `''` | Transport end address |
+| `trans_company_tin` | `str` | `''` | Transport company TIN |
+| `trans_driver_tin` | `str` | `''` | Driver TIN |
+| `trans_car_no` | `str` | `''` | Vehicle plate number |
+| `trans_cost` | `str` | `''` | Transportation cost |
+| `trans_cost_payer` | `int` | `0` | Cost payer (1=buyer, 2=seller) |
+| `inv_comment` | `str` | `''` | Comment text |
+| `parent_id` | `int \| None` | `None` | Parent invoice ID (for distribution) |
+| `prev_correction_id` | `int` | `0` | Previous correction invoice ID |
+| `template_name` | `str` | `''` | Template name |
+| `invoice_goods` | `list[InvoiceGoods]` | `[]` | Line items |
+| `invoice_return` | `list[InvoiceReturn]` | `[]` | Return references |
+| `invoice_advance` | `list[InvoiceAdvance]` | `[]` | Advance payment references |
+| `sub_invoices_distribution` | `list[SubInvoiceDistribution]` | `[]` | Distribution sub-invoices (OUT) |
+| `raw_data` | `dict` | `{}` | Original dict for unmapped fields |
+
+> Fields marked **(OUT)** are read-only — set by the server and not sent on save.
+
+**Methods:**
+
+- `add_goods(goods_name, quantity, unit_price, **kwargs) -> InvoiceGoods` — add a goods item with auto-calculated `amount`
+- `to_dict() -> dict` — serialize to eAPI JSON (writable fields only)
+- `Invoice.from_dict(data) -> Invoice` — parse from eAPI JSON response
+
+**Usage:**
+
+```python
+inv = Invoice(
+    inv_category   = InvoiceCategory.GOODS_SERVICE,
+    inv_type       = InvoiceType.WITH_TRANSPORT,
+    operation_date = '10-04-2025 10:00:00',
+    tin_seller     = '206322102',
+    tin_buyer      = '12345678910',
+)
+inv.add_goods('Office Supplies', quantity=10, unit_price=25.50)
+# inv.invoice_goods[0].amount == 255.0 (auto-calculated)
+```
+
+---
+
+## `InvoiceGoods`
+
+A single goods/service line item on an invoice.
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `id` | `int` | `0` | Line item ID (0 for new) |
+| `invoice_id` | `int` | `0` | Parent invoice ID |
+| `goods_name` | `str` | `''` | Product / service description |
+| `barcode` | `str` | `''` | Barcode value |
+| `unit_id` | `int` | `0` | Measurement unit ID |
+| `unit_txt` | `str` | `''` | Unit text (when `unit_id=99` "other") |
+| `quantity` | `float` | `0` | Quantity |
+| `quantity_ext` | `str` | `''` | Additional quantity |
+| `unit_price` | `float` | `0` | Unit price |
+| `amount` | `float` | `0` | Total amount (`quantity * unit_price`) |
+| `vat_amount` | `float` | `0` | VAT amount (OUT) |
+| `vat_type` | `int` | `0` | VAT type (0=standard, 1=zero, 2=exempt) |
+| `excise_amount` | `float` | `0` | Excise tax amount |
+| `excise_id` | `int` | `0` | Excise code ID |
+| `excise_unit_price` | `float` | `0` | Excise unit price |
+| `raw_data` | `dict` | `{}` | Original dict for unmapped fields |
+
+**Methods:**
+
+- `to_dict() -> dict` — serialize to eAPI JSON
+- `InvoiceGoods.from_dict(data) -> InvoiceGoods` — parse from eAPI JSON
+
+---
+
+## `InvoiceReturn`
+
+Return reference on an invoice.
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `return_invoice_id` | `int` | `0` | ID of the invoice being returned |
+| `corrected_invoice_id` | `int` | `0` | Corrected invoice ID (OUT) |
+| `inv_number` | `str` | `''` | Invoice number (OUT) |
+| `buyer` | `str` | `''` | Buyer info (OUT) |
+| `operation_date` | `str` | `''` | Operation date (OUT) |
+| `raw_data` | `dict` | `{}` | Original dict for unmapped fields |
+
+**Methods:**
+
+- `to_dict() -> dict` — serializes only `RETURN_INVOICE_ID`
+- `InvoiceReturn.from_dict(data) -> InvoiceReturn` — parse from eAPI JSON
+
+---
+
+## `InvoiceAdvance`
+
+Advance payment reference on an invoice.
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `parent_invoice_id` | `int` | `0` | Parent invoice ID |
+| `id` | `int` | `0` | Sub-document ID |
+| `operation_date` | `str` | `''` | Operation date |
+| `amount` | `float` | `0` | Advance amount |
+| `inv_number` | `str` | `''` | Invoice number (OUT) |
+| `amount_full` | `float` | `0` | Full amount (OUT) |
+| `activate_date` | `str` | `''` | Activation date (OUT) |
+| `raw_data` | `dict` | `{}` | Original dict for unmapped fields |
+
+**Methods:**
+
+- `to_dict() -> dict` — serializes `ID`, `AMOUNT`, and optionally `OPERATION_DATE`
+- `InvoiceAdvance.from_dict(data) -> InvoiceAdvance` — parse from eAPI JSON
+
+---
+
+## `SubInvoiceDistribution`
+
+Distribution sub-invoice reference (read-only, OUT parameter).
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `parent_invoice_id` | `int` | `0` | Parent invoice ID |
+| `sub_invoice_id` | `int` | `0` | Sub-invoice ID |
+| `inv_number` | `str` | `''` | Invoice number |
+| `amount_full` | `float` | `0` | Full amount |
+| `goods_amount_sum` | `float` | `0` | Goods total amount |
+| `raw_data` | `dict` | `{}` | Original dict for unmapped fields |
+
+**Methods:**
+
+- `SubInvoiceDistribution.from_dict(data) -> SubInvoiceDistribution` — parse from eAPI JSON
+
+---
+
+## `InvoiceAction`
+
+Invoice status/action entry returned by `get_actions()`.
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `id` | `int` | `0` | Status ID |
+| `name` | `str` | `''` | Status name (Georgian) |
+| `seller_action` | `int` | `0` | Seller action code |
+| `buyer_action` | `int` | `0` | Buyer action code |
+
+---
+
+## `Unit`
+
+Measurement unit from `get_units()`.
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `value` | `str` | `''` | Unit ID |
+| `label` | `str` | `''` | Unit display label (e.g., "ცალი", "კგ") |
+
+---
+
+## `OrgInfo`
+
+Organization info from `get_org_info()`.
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `tin` | `str` | `''` | Tax identification number |
+| `address` | `str` | `''` | Registered address |
+| `is_vat_payer` | `bool` | `False` | Whether the org is a VAT payer |
+| `is_diplomat` | `bool` | `False` | Whether the org has diplomatic status |
+| `name` | `str` | `''` | Organization name |
+| `raw_data` | `dict` | `{}` | Original dict for unmapped fields |
+
+---
+
+## `BarCode`
+
+Barcode catalog entry.
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `barcode` | `str` | `''` | Barcode value |
+| `goods_name` | `str` | `''` | Product name |
+| `unit_id` | `int` | `0` | Unit ID |
+| `unit_txt` | `str` | `''` | Unit text |
+| `vat_type` | `int` | `0` | VAT type |
+| `unit_price` | `float` | `0` | Unit price |
+
+---
+
+## `TransactionResult`
+
+Result from `get_transaction_result()` (async save polling).
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `invoice_id` | `int` | `0` | Created/updated invoice ID |
+| `raw_data` | `dict` | `{}` | Original dict for unmapped fields |

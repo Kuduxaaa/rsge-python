@@ -15,6 +15,28 @@ from rsge.customs.models import (
     CustomsAuthResponse,
     CustomsDeclaration,
 )
+from rsge.invoice.client import InvoiceClient
+from rsge.invoice.enums import (
+    CorrectReason,
+    InvoiceCategory,
+    InvoiceListType,
+    InvoiceType,
+    InvoiceVATType,
+    ReturnType,
+)
+from rsge.invoice.models import (
+    BarCode,
+    Invoice,
+    InvoiceAction,
+    InvoiceAdvance,
+    InvoiceAuthResponse,
+    InvoiceGoods,
+    InvoiceReturn,
+    OrgInfo,
+    SubInvoiceDistribution,
+    TransactionResult,
+    Unit,
+)
 from rsge.waybill.client import WayBillClient
 from rsge.waybill.enums import (
     BusinessStatus,
@@ -45,6 +67,7 @@ from rsge.waybill.models import (
 __all__ = [
     'WayBillClient',
     'CustomsClient',
+    'InvoiceClient',
     'WayBillStatus',
     'WayBillType',
     'TransportationType',
@@ -53,6 +76,12 @@ __all__ = [
     'TransportCostPayer',
     'ConfirmationStatus',
     'BusinessStatus',
+    'InvoiceCategory',
+    'InvoiceType',
+    'InvoiceVATType',
+    'InvoiceListType',
+    'CorrectReason',
+    'ReturnType',
     'WayBill',
     'GoodsItem',
     'WoodDocument',
@@ -68,6 +97,17 @@ __all__ = [
     'ErrorCode',
     'CustomsDeclaration',
     'CustomsAuthResponse',
+    'Invoice',
+    'InvoiceGoods',
+    'InvoiceReturn',
+    'InvoiceAdvance',
+    'SubInvoiceDistribution',
+    'InvoiceAction',
+    'InvoiceAuthResponse',
+    'Unit',
+    'OrgInfo',
+    'BarCode',
+    'TransactionResult',
     'RSGeError',
     'RSGeAuthenticationError',
     'RSGeValidationError',

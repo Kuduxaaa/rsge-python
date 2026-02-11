@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "rsge-python"
 version = "1.0.0"
-description = "Python SDK for the Georgian Revenue Service (RS.ge) – WayBill & Customs Declarations API"
+description = "Python SDK for the Georgian Revenue Service (RS.ge) – WayBill, Customs Declarations & Invoice/Declaration API"
 readme = "README.md"
 license = {text = "MIT"}
 requires-python = ">=3.10"
@@ -13,7 +13,7 @@ authors = [
     {name = "Kuduxaaa", email = "imkuduxaaa@gmail.com"},
 ]
 
-keywords = ["georgia", "rs.ge", "waybill", "ზედნადები", "customs", "revenue-service", "tax"]
+keywords = ["georgia", "rs.ge", "waybill", "ზედნადები", "customs", "revenue-service", "tax", "invoice", "declaration", "საგადასახადო"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
@@ -54,7 +54,7 @@ line-length = 100
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "N", "W", "UP", "D"]
-ignore = ["D100", "D103", "D104", "D105", "D107", "D417"]
+ignore = ["D100", "D102", "D103", "D104", "D105", "D107", "D417"]
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"

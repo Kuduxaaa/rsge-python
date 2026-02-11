@@ -145,3 +145,119 @@ Customs checkpoint confirmation status.
 |--------|-------|----------|-------------|
 | `CONFIRMED` | `1` | დადასტურებული | Confirmed by customs |
 | `REJECTED` | `2` | უარყოფილი | Rejected by customs |
+
+---
+
+# Invoice Enums
+
+Enums specific to the eAPI Invoice/Declaration service. Import them directly from `rsge`:
+
+```python
+from rsge import InvoiceCategory, InvoiceType, InvoiceVATType, InvoiceListType
+```
+
+**Source:** `rsge/invoice/enums.py`
+
+---
+
+## InvoiceCategory
+
+საგადასახადო დოკუმენტის კატეგორია — Invoice document category.
+
+| Member | Value | Georgian | Description |
+|--------|-------|----------|-------------|
+| `GOODS_SERVICE` | `1` | მინოდება/მომსახურება | Goods / service delivery |
+| `WOOD` | `2` | ხე-ტყე | Wood / timber products |
+| `PETROLEUM` | `3` | ნავთობპროდუქტები | Petroleum products |
+| `ADVANCE` | `4` | ავანსი | Advance payment |
+
+```python
+inv = Invoice(inv_category=InvoiceCategory.GOODS_SERVICE)
+```
+
+---
+
+## InvoiceType
+
+საგადასახადო დოკუმენტის ტიპი — Invoice document type.
+
+| Member | Value | Georgian | Description |
+|--------|-------|----------|-------------|
+| `INNER_TRANSPORT` | `1` | შიდა გადაზიდვა | Internal transfer |
+| `WITH_TRANSPORT` | `2` | ტრანსპორტირებით | Delivery with transportation |
+| `WITHOUT_TRANSPORT` | `3` | ტრანსპორტირების გარეშე | Delivery without transportation |
+| `DISTRIBUTION` | `4` | დისტრიბუცია | Distribution |
+| `RETURN` | `5` | უკან დაბრუნება | Return of goods |
+| `ADVANCE` | `6` | ავანსი | Advance payment |
+| `RETAIL` | `7` | საცალო მინოდებისთვის | For retail delivery |
+| `WHOLESALE` | `8` | საბითუმო მინოდებისთვის | For wholesale delivery |
+| `IMPORT_TRANSPORT` | `9` | იმპორტირებისას ტრანსპორტირება | Import: transport to customs destination |
+| `EXPORT_TRANSPORT` | `10` | ექსპორტისას ტრანსპორტირება | Export: transport from customs origin |
+| `SERVICE` | `11` | მომსახურება | Service provision |
+
+```python
+inv = Invoice(inv_type=InvoiceType.WITH_TRANSPORT)
+```
+
+---
+
+## InvoiceVATType
+
+დღგ-ს დაბეგვრის ტიპი — VAT taxation type for invoice goods.
+
+| Member | Value | Georgian | Description |
+|--------|-------|----------|-------------|
+| `STANDARD` | `0` | ჩვეულებრივი | Standard / regular VAT |
+| `ZERO_RATE` | `1` | ნულოვანი | Zero-rated |
+| `EXEMPT` | `2` | დაუბეგრავი | VAT exempt |
+
+> **Note:** This is separate from the waybill `VATType` to avoid cross-module coupling, though the values are the same.
+
+---
+
+## InvoiceListType
+
+ListInvoices TYPE filter values.
+
+| Member | Value | Georgian | Description |
+|--------|-------|----------|-------------|
+| `SELLER_DOCS` | `1` | გამორნერილი დოკუმენტები | Seller's own documents |
+| `SELLER_DECL` | `10` | დეკლარაციებზე მისაბმელი | Seller's documents for declaration |
+| `BUYER_DOCS` | `2` | თქვენზე გამორნერილი | Documents addressed to buyer |
+| `BUYER_DECL` | `20` | მყიდველის დეკლარაცია | Buyer's documents for declaration |
+| `SENT_TO_DECL` | `21` | გადამზიდავზე გამორნერილი | Sent for declaration |
+| `TEMPLATES` | `3` | შაბლონები | Templates |
+| `TEMPLATES_DECL` | `30` | შაბლონები დეკლარაციისთვის | Templates for declaration |
+| `ADVANCE_WITH_BALANCE` | `5` | ავანსი ბალანსით | Advance documents with balance |
+| `ADVANCE_BALANCE_DECL` | `50` | ავანსი ბალანსით (დეკლარაცია) | Advance balance for declarations |
+
+```python
+invoices = client.list_invoices(TYPE=InvoiceListType.SELLER_DOCS)
+```
+
+---
+
+## CorrectReason
+
+კორექტირების მიზეზი — Correction reason codes.
+
+| Member | Value | Georgian | Description |
+|--------|-------|----------|-------------|
+| `NONE` | `0` | არ არის | No correction |
+| `WRONG_AMOUNT` | `1` | არასწორი თანხა | Wrong amount |
+| `WRONG_GOODS` | `2` | არასწორი სახე | Wrong goods/operation |
+| `WRONG_TIN` | `3` | არასწორი TIN | Wrong TIN / compensation change |
+| `WRONG_DATE` | `4` | არასწორი თარიღი | Wrong date / partial return |
+| `WRONG_ADDRESS` | `5` | რედაქტირება | Wrong address |
+| `OTHER` | `6` | სხვა | Other reason |
+
+---
+
+## ReturnType
+
+უკან დაბრუნების ტიპი — Return type.
+
+| Member | Value | Georgian | Description |
+|--------|-------|----------|-------------|
+| `PARTIAL` | `0` | ნაწილობრივი | Partial return |
+| `FULL` | `1` | სრული | Full return |

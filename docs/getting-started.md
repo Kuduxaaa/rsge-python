@@ -76,11 +76,41 @@ with CustomsClient() as client:
         print(f'{decl.declaration_number}: {decl.description}')
 ```
 
+## Quickstart: Invoice Client
+
+```python
+from rsge import InvoiceClient, Invoice, InvoiceCategory, InvoiceType
+
+with InvoiceClient() as client:
+    # Authenticate (supports 2FA)
+    auth = client.authenticate('your_username', 'your_password')
+
+    if auth.needs_pin:
+        pin = input('Enter PIN: ')
+        auth = client.authenticate_pin(auth.pin_token, pin)
+
+    # Create and save an invoice
+    inv = Invoice(
+        inv_category   = InvoiceCategory.GOODS_SERVICE,
+        inv_type       = InvoiceType.WITH_TRANSPORT,
+        operation_date = '10-04-2025 10:00:00',
+        tin_seller     = '206322102',
+        tin_buyer      = '12345678910',
+    )
+
+    inv.add_goods('Office Supplies', quantity=10, unit_price=25.50)
+
+    txn_id = client.save_invoice(inv)
+    result = client.get_transaction_result(txn_id)
+    print(f'Saved invoice ID: {result.invoice_id}')
+```
+
 ## Next Steps
 
 - [WayBill Client API Reference](waybill-client.md) — full method reference with usage examples
 - [Customs Client API Reference](customs-client.md) — authentication flows and declaration queries
+- [Invoice Client API Reference](invoice-client.md) — invoice/declaration operations and 2FA auth
 - [Models Reference](models.md) — all dataclass models with field descriptions
-- [Enums Reference](enums.md) — waybill types, statuses, and other enum values
+- [Enums Reference](enums.md) — waybill types, statuses, invoice categories, and other enum values
 - [Exceptions Reference](exceptions.md) — error handling patterns
-- `examples/` directory — 10 standalone example scripts covering all major workflows
+- `examples/` directory — standalone example scripts covering all major workflows
