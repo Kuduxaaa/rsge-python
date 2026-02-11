@@ -336,14 +336,6 @@ for inv in invoices:
         print(f'{item.goods_name}: {item.amount}')
 ```
 
-#### `get_invoice_status(invoice_id) -> dict`
-
-Get the current status of an invoice.
-
-**Returns:** Dict with `INVOICE_ID`, `INVOICE_NUMBER`, `SELLER_ACTION`, `BUYER_ACTION`.
-
----
-
 ### Barcode Catalog
 
 #### `list_bar_codes(**filters) -> list[BarCode]`

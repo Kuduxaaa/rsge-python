@@ -173,7 +173,7 @@ with InvoiceClient() as client:
 |----------|---------|
 | **Auth** | `authenticate()`, `authenticate_pin()`, `sign_out()` |
 | **Common** | `get_vat_payer_status()`, `get_org_info()`, `get_units()`, `get_transaction_result()` |
-| **CRUD** | `get_invoice()`, `save_invoice()`, `list_invoices()`, `list_goods()`, `get_invoice_status()` |
+| **CRUD** | `get_invoice()`, `save_invoice()`, `list_invoices()`, `list_goods()` |
 | **Lifecycle** | `activate_invoice()`, `activate_invoices()`, `delete_invoice()`, `cancel_invoice()` |
 | **Buyer** | `confirm_invoice()`, `confirm_invoices()`, `refuse_invoice()`, `refuse_invoices()` |
 | **Barcode** | `list_bar_codes()`, `get_bar_code()`, `clear_bar_codes()` |

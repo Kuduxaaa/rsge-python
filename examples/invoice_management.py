@@ -38,11 +38,6 @@ def main():
             print(f'  Amount: {detail.amount_full} GEL (VAT: {detail.amount_vat})')
             print(f'  Goods:  {len(detail.invoice_goods)} items')
 
-            # Get invoice status
-            status = client.get_invoice_status(detail.id)
-            print(f'  Status: seller_action={status["SELLER_ACTION"]}, '
-                  f'buyer_action={status["BUYER_ACTION"]}')
-
         # Confirm a buyer invoice (uncomment to use)
         # client.confirm_invoice(invoice_id=7624)
 

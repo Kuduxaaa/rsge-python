@@ -611,19 +611,6 @@ class InvoiceClient:
         })
         return True
 
-    def get_invoice_status(self, invoice_id: int) -> dict[str, Any]:
-        """Get the current status of an invoice.
-
-        Args:
-            invoice_id: Invoice ID to check.
-
-        Returns:
-            Dict with INVOICE_ID, INVOICE_NUMBER, SELLER_ACTION, BUYER_ACTION.
-        """
-        self._require_auth()
-        data = self._post('/Invoice/GetInvoiceStatus', {'INVOICE': {'ID': invoice_id}})
-        return dict(data.get('DATA', {}))
-
     # ── Internal helpers ─────────────────────────────────────────
 
     def _post(self, path: str, payload: dict[str, Any]) -> dict[str, Any]:
@@ -661,7 +648,7 @@ class InvoiceClient:
             raise RSGeConnectionError(f'Connection failed: {exc}') from exc
 
         except requests.exceptions.HTTPError as exc:
-            status_code = exc.response.status_code if exc.response else 0
+            status_code = exc.response.status_code if exc.response is not None else 0
             if status_code == 401:
                 raise RSGeAuthenticationError(
                     'Unauthorized. Token may be expired.',
