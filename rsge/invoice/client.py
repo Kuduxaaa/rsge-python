@@ -658,7 +658,16 @@ class InvoiceClient:
                     'Unauthorized. Token may be expired.',
                     code=status_code,
                 ) from exc
-            raise RSGeAPIError(f'HTTP error: {status_code}', code=status_code) from exc
+            message = f'HTTP error: {status_code}'
+            if exc.response is not None:
+                try:
+                    body = exc.response.json()
+                    api_text = body.get('STATUS', {}).get('TEXT', '')
+                    if api_text:
+                        message = api_text
+                except (ValueError, KeyError):
+                    pass
+            raise RSGeAPIError(message, code=status_code) from exc
 
         result: dict[str, Any] = response.json()
         return result

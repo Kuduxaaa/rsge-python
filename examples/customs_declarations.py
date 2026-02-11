@@ -2,14 +2,22 @@
 
 Demonstrates authenticating with the customs API,
 fetching declarations by date range, and signing out.
+
+Note: The customs API may not be available on the sandbox environment.
 """
 
 from rsge import CustomsClient
+from rsge.core.exceptions import RSGeAPIError
 
 
 def main():
     with CustomsClient() as client:
-        auth = client.authenticate('your_username', 'your_password')
+        try:
+            auth = client.authenticate('satesto2', '123456')
+        except RSGeAPIError as exc:
+            print(f'Note: Customs API auth not available on sandbox: {exc}')
+            return
+
         print(f'Authenticated (token: {auth.access_token[:20]}...)')
 
         declarations = client.get_declarations(

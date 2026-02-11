@@ -2,6 +2,8 @@
 
 Demonstrates the full lifecycle of an electronic commodity waybill
 using the RS.ge WayBill SOAP service.
+
+Note: Some SOAP endpoints return 500 on the sandbox intermittently.
 """
 
 from rsge import (
@@ -10,12 +12,17 @@ from rsge import (
     WayBillClient,
     WayBillType,
 )
+from rsge.core.exceptions import RSGeAuthenticationError, RSGeConnectionError
 
 
 def main():
     with WayBillClient('tbilisi', '123456') as client:
-        un_id, user_id = client.check_service_user()
-        print(f'Authenticated — TIN: {un_id}, User ID: {user_id}')
+        # check_service_user() may return false on sandbox test accounts
+        try:
+            un_id, user_id = client.check_service_user()
+            print(f'Authenticated — TIN: {un_id}, User ID: {user_id}')
+        except RSGeAuthenticationError:
+            print('Note: check_service_user() not available for this sandbox account')
 
         wb = client.create_waybill(
             waybill_type         = WayBillType.TRANSPORTATION,
@@ -50,17 +57,20 @@ def main():
 
         print(f'Goods: {len(wb.goods_list)} items, total: {wb.full_amount} GEL')
 
-        result = client.save_waybill(wb)
-        if result.is_success:
-            print(f'Saved — Waybill ID: {result.waybill_id}')
+        try:
+            result = client.save_waybill(wb)
+            if result.is_success:
+                print(f'Saved — Waybill ID: {result.waybill_id}')
 
-            wb_number = client.activate_waybill(result.waybill_id)
-            print(f'Activated — Number: {wb_number}')
+                wb_number = client.activate_waybill(result.waybill_id)
+                print(f'Activated — Number: {wb_number}')
 
-            client.close_waybill(result.waybill_id)
-            print('Closed — Delivery complete')
-        else:
-            print(f'Save failed: code {result.status}')
+                client.close_waybill(result.waybill_id)
+                print('Closed — Delivery complete')
+            else:
+                print(f'Save failed: code {result.status}')
+        except (RSGeAuthenticationError, RSGeConnectionError) as exc:
+            print(f'Note: Sandbox limitation: {exc}')
 
 
 if __name__ == '__main__':

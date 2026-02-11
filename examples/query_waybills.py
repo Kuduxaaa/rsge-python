@@ -2,27 +2,38 @@
 
 Demonstrates listing waybills with filters and retrieving
 full waybill details by ID.
+
+Note: Some SOAP endpoints return 500 on the sandbox intermittently.
 """
 
 from rsge import WayBillClient, WayBillType
+from rsge.core.exceptions import RSGeConnectionError
 
 
 def main():
     with WayBillClient('tbilisi', '123456') as client:
-        waybills = client.get_waybills(
-            statuses      = ',1,',
-            create_date_s = '2024-01-01',
-            create_date_e = '2024-01-31',
-        )
+        try:
+            waybills = client.get_waybills(
+                statuses      = ',1,',
+                create_date_s = '2024-01-01',
+                create_date_e = '2024-01-31',
+            )
+        except RSGeConnectionError as exc:
+            print(f'Note: SOAP service error (sandbox may be unstable): {exc}')
+            return
 
         print(f'Seller waybills: {len(waybills)}')
         for wb in waybills[:5]:
             print(f'  #{wb.id} | {wb.waybill_number} | {wb.buyer_name} | {wb.full_amount} GEL')
 
-        buyer_wbs = client.get_buyer_waybills(
-            create_date_s = '2024-01-01',
-            create_date_e = '2024-01-31',
-        )
+        try:
+            buyer_wbs = client.get_buyer_waybills(
+                create_date_s = '2024-01-01',
+                create_date_e = '2024-01-31',
+            )
+        except RSGeConnectionError as exc:
+            print(f'Note: SOAP service error (sandbox may be unstable): {exc}')
+            return
 
         print(f'Buyer waybills: {len(buyer_wbs)}')
 

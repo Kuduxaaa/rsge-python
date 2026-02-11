@@ -6,6 +6,30 @@ from dataclasses import dataclass, field
 from typing import Any
 
 
+def _safe_int(value: Any, default: int = 0) -> int:
+    """Convert a value to int, returning default if conversion fails.
+
+    The ListInvoices endpoint returns display text (e.g. 'გამყიდველი')
+    for fields that are normally integers. This helper handles that gracefully.
+    """
+    if value is None:
+        return default
+    try:
+        return int(value)
+    except (ValueError, TypeError):
+        return default
+
+
+def _safe_float(value: Any, default: float = 0) -> float:
+    """Convert a value to float, returning default if conversion fails."""
+    if value is None:
+        return default
+    try:
+        return float(value)
+    except (ValueError, TypeError):
+        return default
+
+
 @dataclass
 class InvoiceAuthResponse:
     """Authentication response from the eAPI.
@@ -549,13 +573,13 @@ class Invoice:
         advances = [InvoiceAdvance.from_dict(a) for a in data.get('INVOICE_ADVANCE', []) or []]
 
         return cls(
-            id                       = int(data.get('ID', 0) or 0),
+            id                       = _safe_int(data.get('ID')),
             inv_serie                = str(data.get('INV_SERIE', '') or ''),
             inv_number               = str(data.get('INV_NUMBER', '') or ''),
-            inv_category             = int(data.get('INV_CATEGORY', 0) or 0),
-            inv_type                 = int(data.get('INV_TYPE', 0) or 0),
-            seller_action            = int(data.get('SELLER_ACTION', 0) or 0),
-            buyer_action             = int(data.get('BUYER_ACTION', 0) or 0),
+            inv_category             = _safe_int(data.get('INV_CATEGORY')),
+            inv_type                 = _safe_int(data.get('INV_TYPE')),
+            seller_action            = _safe_int(data.get('SELLER_ACTION')),
+            buyer_action             = _safe_int(data.get('BUYER_ACTION')),
             operation_date           = str(data.get('OPERATION_DATE', '') or ''),
             activate_date            = str(data.get('ACTIVATE_DATE', '') or ''),
             create_date              = str(data.get('CREATE_DATE', '') or ''),
@@ -566,7 +590,7 @@ class Invoice:
             agree_cancel_date        = str(data.get('AGREE_CANCEL_DATE', '') or ''),
             correct_date             = str(data.get('CORRECT_DATE', '') or ''),
             trans_start_date         = str(data.get('TRANS_START_DATE', '') or ''),
-            correct_reason_id        = int(data.get('CORRECT_REASON_ID', 0) or 0),
+            correct_reason_id        = _safe_int(data.get('CORRECT_REASON_ID')),
             tin_seller               = str(data.get('TIN_SELLER', '') or ''),
             tin_buyer                = str(data.get('TIN_BUYER', '') or ''),
             foreign_buyer            = str(data.get('FOREIGN_BUYER', 'false') or 'false'),
@@ -574,19 +598,19 @@ class Invoice:
             name_buyer               = str(data.get('NAME_BUYER', '') or ''),
             seqnum_seller            = data.get('SEQNUM_SELLER'),
             seqnum_buyer             = data.get('SEQNUM_BUYER'),
-            seller_status            = int(data.get('SELLER_STATUS', 0) or 0),
-            buyer_status             = int(data.get('BUYER_STATUS', 0) or 0),
+            seller_status            = _safe_int(data.get('SELLER_STATUS')),
+            buyer_status             = _safe_int(data.get('BUYER_STATUS')),
             status_txt_geo           = str(data.get('STATUS_TXT_GEO', '') or ''),
             status_txt_eng           = str(data.get('STATUS_TXT_ENG', '') or ''),
-            amount_full              = float(data.get('AMOUNT_FULL', 0) or 0),
-            amount_excise            = float(data.get('AMOUNT_EXCISE', 0) or 0),
-            amount_vat               = float(data.get('AMOUNT_VAT', 0) or 0),
-            amount_max               = float(data.get('AMOUNT_MAX', 0) or 0),
+            amount_full              = _safe_float(data.get('AMOUNT_FULL')),
+            amount_excise            = _safe_float(data.get('AMOUNT_EXCISE')),
+            amount_vat               = _safe_float(data.get('AMOUNT_VAT')),
+            amount_max               = _safe_float(data.get('AMOUNT_MAX')),
             trans_start_address      = str(data.get('TRANS_START_ADDRESS', '') or ''),
             trans_end_address        = str(data.get('TRANS_END_ADDRESS', '') or ''),
             trans_start_address_no   = str(data.get('TRANS_START_ADDRESS_NO', '') or ''),
             trans_end_address_no     = str(data.get('TRANS_END_ADDRESS_NO', '') or ''),
-            trans_type               = int(data.get('TRANS_TYPE', 0) or 0),
+            trans_type               = _safe_int(data.get('TRANS_TYPE')),
             trans_type_txt           = str(data.get('TRANS_TYPE_TXT', '') or ''),
             trans_company_tin        = str(data.get('TRANS_COMPANY_TIN', '') or ''),
             trans_company_name       = str(data.get('TRANS_COMPANY_NAME', '') or ''),
@@ -598,13 +622,13 @@ class Invoice:
             trans_car_no             = str(data.get('TRANS_CAR_NO', '') or ''),
             trans_trailer_no         = str(data.get('TRANS_TRAILER_NO', '') or ''),
             trans_cost               = str(data.get('TRANS_COST', '') or ''),
-            trans_cost_payer         = int(data.get('TRANS_COST_PAYER', 0) or 0),
+            trans_cost_payer         = _safe_int(data.get('TRANS_COST_PAYER')),
             inv_comment              = str(data.get('INV_COMMENT', '') or ''),
             parent_id                = data.get('PARENT_ID'),
-            prev_correction_id       = int(data.get('PREV_CORRECTION_ID', 0) or 0),
+            prev_correction_id       = _safe_int(data.get('PREV_CORRECTION_ID')),
             next_correction_id       = data.get('NEXT_CORRECTION_ID'),
             template_name            = str(data.get('TEMPLATE_NAME', '') or ''),
-            user_role                = int(data.get('USER_ROLE', 0) or 0),
+            user_role                = _safe_int(data.get('USER_ROLE')),
             invoice_goods            = goods,
             invoice_parent_goods     = parent_goods,
             invoice_return           = returns,

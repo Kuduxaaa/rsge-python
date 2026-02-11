@@ -16,7 +16,7 @@ from rsge import (
 def main():
     with InvoiceClient() as client:
         # Step 1: Authenticate (handles both 1FA and 2FA)
-        auth = client.authenticate('your_username', 'your_password')
+        auth = client.authenticate('satesto2', '123456')
 
         if auth.needs_pin:
             pin = input(f'Enter PIN sent to {auth.masked_mobile}: ')
@@ -25,14 +25,19 @@ def main():
         print(f'Authenticated (token: {auth.access_token[:20]}...)')
 
         # Step 2: Create an invoice
+        # Note: sandbox only allows test TINs 206322102 and 12345678910
         inv = Invoice(
-            inv_category       = InvoiceCategory.GOODS_SERVICE,
-            inv_type           = InvoiceType.WITH_TRANSPORT,
-            operation_date     = '10-04-2025 10:00:00',
-            tin_seller         = '206322102',
-            tin_buyer          = '12345678910',
+            inv_category        = InvoiceCategory.GOODS_SERVICE,
+            inv_type            = InvoiceType.WITH_TRANSPORT,
+            operation_date      = '10-02-2025 10:00:00',
+            tin_seller          = '12345678910',
+            tin_buyer           = '206322102',
             trans_start_address = 'თბილისი, რუსთაველის გამზ. 12',
             trans_end_address   = 'რუსთავი, მშვიდობის ქ. 5',
+            trans_type          = 1,
+            trans_car_no        = 'AB-123-CD',
+            trans_driver_tin    = '206322102',
+            trans_cost_payer    = 2,
         )
 
         # Step 3: Add goods (amount auto-calculated)

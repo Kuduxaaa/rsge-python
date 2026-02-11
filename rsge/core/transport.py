@@ -89,8 +89,9 @@ class SOAPTransport:
                 f'Request to RS.ge timed out after {self._timeout}s'
             ) from exc
         except requests.exceptions.HTTPError as exc:
+            status_code = exc.response.status_code if exc.response is not None else 0
             raise RSGeConnectionError(
-                f'HTTP error from RS.ge: {exc.response.status_code}'
+                f'HTTP error from RS.ge: {status_code}'
             ) from exc
 
         return self._parse_response(response.text, method)

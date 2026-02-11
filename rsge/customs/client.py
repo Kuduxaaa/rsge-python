@@ -181,7 +181,8 @@ class CustomsClient:
             raise RSGeConnectionError(f'Connection failed: {exc}') from exc
 
         except requests.exceptions.HTTPError as exc:
-            raise RSGeAPIError(f'HTTP error: {exc.response.status_code}') from exc
+            status_code = exc.response.status_code if exc.response is not None else 0
+            raise RSGeAPIError(f'HTTP error: {status_code}') from exc
 
         data = response.json()
         status = data.get('STATUS', {})
@@ -220,7 +221,7 @@ class CustomsClient:
             raise RSGeConnectionError(f'Connection failed: {exc}') from exc
 
         except requests.exceptions.HTTPError as exc:
-            status_code = exc.response.status_code if exc.response else 0
+            status_code = exc.response.status_code if exc.response is not None else 0
             raise RSGeAPIError(f'HTTP error: {status_code}') from exc
 
         result: dict[str, Any] = response.json()

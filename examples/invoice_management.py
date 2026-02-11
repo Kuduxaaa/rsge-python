@@ -9,7 +9,7 @@ from rsge import InvoiceClient, InvoiceListType
 
 def main():
     with InvoiceClient() as client:
-        client.authenticate('your_username', 'your_password')
+        client.authenticate('satesto2', '123456')
 
         # List seller's own documents
         seller_docs = client.list_invoices(

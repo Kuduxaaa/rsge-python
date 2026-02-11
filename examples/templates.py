@@ -2,9 +2,12 @@
 
 Demonstrates creating a waybill template, listing templates,
 loading a template, and creating a waybill from it.
+
+Note: Some SOAP endpoints return 500 on the sandbox intermittently.
 """
 
 from rsge import WayBillClient, WayBillType
+from rsge.core.exceptions import RSGeConnectionError
 
 
 def main():
@@ -25,18 +28,21 @@ def main():
             bar_code = 'STD01',
         )
 
-        client.save_waybill_template('ბათუმის მარშრუტი', wb)
-        print('Template saved')
+        try:
+            client.save_waybill_template('ბათუმის მარშრუტი', wb)
+            print('Template saved')
 
-        templates = client.get_waybill_templates()
-        for t in templates:
-            print(f"  Template #{t['id']}: {t['name']}")
+            templates = client.get_waybill_templates()
+            for t in templates:
+                print(f"  Template #{t['id']}: {t['name']}")
 
-        if templates:
-            loaded = client.get_waybill_template(templates[0]['id'])
-            loaded.buyer_name = 'შპს ახალი მყიდველი'
-            result = client.save_waybill(loaded)
-            print(f'Waybill from template: {result.waybill_id}')
+            if templates:
+                loaded = client.get_waybill_template(templates[0]['id'])
+                loaded.buyer_name = 'შპს ახალი მყიდველი'
+                result = client.save_waybill(loaded)
+                print(f'Waybill from template: {result.waybill_id}')
+        except RSGeConnectionError as exc:
+            print(f'Note: SOAP service error (sandbox may be unstable): {exc}')
 
 
 if __name__ == '__main__':
