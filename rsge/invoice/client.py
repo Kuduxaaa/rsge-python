@@ -161,6 +161,10 @@ class InvoiceClient:
     def get_vat_payer_status(self, tin: str, vat_date: str = '') -> bool:
         """Check if an organization is a VAT payer.
 
+        Note:
+            This endpoint returns 500 on the RS.ge sandbox environment.
+            Use ``get_org_info(tin).is_vat_payer`` as an alternative.
+
         Args:
             tin: Tax identification number (9 or 11 digits).
             vat_date: Optional date for historical check.

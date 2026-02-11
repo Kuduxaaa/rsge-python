@@ -9,7 +9,7 @@ from rsge import InvoiceClient
 
 def main():
     with InvoiceClient() as client:
-        client.authenticate('your_username', 'your_password')
+        client.authenticate('satesto2', '123456')
 
         # Look up organization info
         org = client.get_org_info('206322102')
@@ -19,9 +19,10 @@ def main():
         print(f'  VAT payer: {org.is_vat_payer}')
         print(f'  Diplomat: {org.is_diplomat}')
 
-        # Check VAT payer status
-        is_vat = client.get_vat_payer_status('206322102')
-        print(f'\nVAT payer status: {is_vat}')
+        # Check VAT payer status (standalone endpoint)
+        # Note: this endpoint returns 500 on sandbox; use org.is_vat_payer instead
+        # is_vat = client.get_vat_payer_status('206322102')
+        # print(f'\nVAT payer status: {is_vat}')
 
         # Get measurement units
         units = client.get_units()
