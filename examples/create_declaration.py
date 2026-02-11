@@ -43,7 +43,8 @@ def main():
         invoice_ids = [inv.id for inv in invoices]
         try:
             client.create_decl(invoice_ids, year=year, month=month)
-            print(f'Declaration created — {len(invoice_ids)} invoice(s) attached to {year}/{month:02d}')
+            count = len(invoice_ids)
+            print(f'Declaration created — {count} invoice(s) attached to {year}/{month:02d}')
         except RSGeAPIError as exc:
             print(f'Note: create_decl() not available on sandbox: {exc}')
 
