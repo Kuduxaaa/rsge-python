@@ -1,6 +1,6 @@
 """RS.ge Python SDK - Georgian Revenue Service Integration."""
 
-__version__ = '1.0.0'
+__version__ = '1.1.0'
 __author__ = 'Kuduxaaa <imkuduxaaa@gmail.com>'
 
 from rsge.core.exceptions import (
